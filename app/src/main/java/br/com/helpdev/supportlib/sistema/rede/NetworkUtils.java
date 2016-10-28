@@ -7,7 +7,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import br.com.grupocriar.swapandroid.sistema.RuntimeAndroid;
+import br.com.helpdev.supportlib.sistema.RuntimeAndroid;
 
 /**
  * Created by demantoide on 17/03/16.

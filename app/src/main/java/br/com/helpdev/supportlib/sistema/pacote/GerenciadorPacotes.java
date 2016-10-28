@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import br.com.grupocriar.swapandroid.sistema.arquivos.Arquivos;
+import br.com.helpdev.supportlib.sistema.arquivos.Arquivos;
 
 /**
  * Permissoes:

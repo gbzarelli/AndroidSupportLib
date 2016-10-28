@@ -11,7 +11,7 @@ import android.telephony.TelephonyManager;
 
 import java.util.HashMap;
 
-import br.com.grupocriar.swapandroid.sistema.seguranca.MD5;
+import br.com.helpdev.supportlib.sistema.seguranca.MD5;
 
 /**
  * @author guilherme
