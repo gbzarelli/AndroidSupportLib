@@ -1,7 +1,7 @@
 package br.com.helpdev.supportlib.sistema.rede.wifi;
 
 /**
- * Created by demantoide on 29/09/15.
+ * Created by Guilherme Biff Zarelli on 29/09/15.
  */
 
 import android.content.Context;

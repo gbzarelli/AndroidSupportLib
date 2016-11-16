@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import br.com.grupocriar.swapandroid.utils.ThisObjects;
-import br.com.grupocriar.swapandroid.utils.UnitUtils;
+import br.com.helpdev.supportlib.utils.ThisObjects;
+import br.com.helpdev.supportlib.utils.UnitUtils;
 
 
 /**
- * Created by felipe on 11/05/16.
+ * Created by Felipe Barata on 11/05/16.
  */
 public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 

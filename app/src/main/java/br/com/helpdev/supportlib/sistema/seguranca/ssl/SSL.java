@@ -12,7 +12,7 @@ import javax.net.ssl.TrustManager;
 
 
 /**
- * Created by demantoide on 15/01/16.
+ * Created by Guilherme Biff Zarelli on 15/01/16.
  */
 public class SSL {
     public static void allowAllSSL() {

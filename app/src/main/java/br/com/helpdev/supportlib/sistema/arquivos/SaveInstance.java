@@ -6,7 +6,7 @@ import android.util.Log;
 import java.io.Serializable;
 
 /**
- * Created by demantoide on 22/02/16.
+ * Created by Guilherme Biff Zarelli on 22/02/16.
  */
 public class SaveInstance {
     private static final String LOG = "SaveInstance";

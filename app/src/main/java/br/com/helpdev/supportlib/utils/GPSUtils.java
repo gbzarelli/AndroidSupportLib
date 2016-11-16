@@ -1,7 +1,7 @@
 package br.com.helpdev.supportlib.utils;
 
 /**
- * Created by demantoide on 15/03/16.
+ * Created by Guilherme Biff Zarelli on 15/03/16.
  */
 public final class GPSUtils {
     private GPSUtils() {

@@ -3,7 +3,7 @@ package br.com.helpdev.supportlib.sistema;
 import java.io.IOException;
 
 /**
- * Created by demantoide on 17/03/16.
+ * Created by Guilherme Biff Zarelli on 17/03/16.
  */
 public class RuntimeAndroid {
 

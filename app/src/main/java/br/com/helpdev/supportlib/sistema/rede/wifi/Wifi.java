@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.List;
 
 /**
- * Created by demantoide on 26/07/15.
+ * Created by Guilherme Biff Zarelli on 26/07/15.
  */
 public class Wifi {
     private static final String LOG = "Wifi";

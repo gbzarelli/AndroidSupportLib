@@ -9,7 +9,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 /**
- * Created by demantoide on 08/07/15.
+ * Created by Guilherme Biff Zarelli on 08/07/15.
  */
 public class Telefone implements DialogInterface.OnClickListener {
 

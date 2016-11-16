@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by demantoide on 03/02/16.
+ * Created by Guilherme Biff Zarelli on 03/02/16.
  */
 public class LogCat {
     private static final String LOG = "LogCat";

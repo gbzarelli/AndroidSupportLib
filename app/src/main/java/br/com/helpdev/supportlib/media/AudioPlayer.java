@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 /**
- * Created by demantoide on 16/03/16.
+ * Created by Guilherme Biff Zarelli on 16/03/16.
  */
 public class AudioPlayer implements MediaPlayer.OnCompletionListener {
 
@@ -12,9 +12,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
 
     private MediaPlayer mediaPlayer;
 
-    private AudioPlayer() {
-
-    }
+    private AudioPlayer() {}
 
     public static AudioPlayer getInstance() {
         if (instance == null) {

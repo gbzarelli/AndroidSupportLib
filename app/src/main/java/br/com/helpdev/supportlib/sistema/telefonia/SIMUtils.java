@@ -6,7 +6,7 @@ import android.telephony.TelephonyManager;
 import br.com.helpdev.supportlib.sistema.rede.NetworkUtils;
 
 /**
- * Created by demantoide on 26/08/16.
+ * Created by Guilherme Biff Zarelli on 26/08/16.
  */
 public class SIMUtils {
 

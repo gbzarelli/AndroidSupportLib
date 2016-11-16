@@ -10,7 +10,7 @@ import java.io.IOException;
 import br.com.helpdev.supportlib.sistema.RuntimeAndroid;
 
 /**
- * Created by demantoide on 17/03/16.
+ * Created by Guilherme Biff Zarelli on 17/03/16.
  */
 public final class NetworkUtils {
 

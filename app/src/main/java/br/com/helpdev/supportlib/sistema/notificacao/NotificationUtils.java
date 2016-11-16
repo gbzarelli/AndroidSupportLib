@@ -7,7 +7,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
 /**
- * Created by demantoide on 14/03/16.
+ * Created by Guilherme Biff Zarelli on 14/03/16.
  */
 public class NotificationUtils {
 

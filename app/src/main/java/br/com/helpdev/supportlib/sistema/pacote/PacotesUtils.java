@@ -8,7 +8,7 @@ import android.provider.Settings;
 import java.io.File;
 
 /**
- * Created by demantoide on 16/03/16.
+ * Created by Guilherme Biff Zarelli on 16/03/16.
  */
 public final class PacotesUtils {
     private PacotesUtils() {

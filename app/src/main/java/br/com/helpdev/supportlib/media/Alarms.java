@@ -6,18 +6,21 @@ import android.media.ToneGenerator;
 import android.os.Vibrator;
 
 /**
+ *
+ <uses-permission android:name="android.permission.VIBRATE" />
+ *
  * Created by Guilherme Biff Zarelli on 06/07/16.
  */
 public class Alarms {
 
     private static volatile boolean threadReproduzindo;
 
-    public static void reproduzirAlarme(final Context context, final int timeMillis) {
-        reproduzirAlarme(context, true, timeMillis);
+    public static void playAlarm(final Context context, final int timeMillis) {
+        playAlarm(context, true, timeMillis);
     }
 
-    public static void reproduzirAlarme(Context context, boolean vibrar, int timeMillis) {
-        reproduzirAlarme(context, ToneGenerator.TONE_SUP_ERROR, vibrar, timeMillis);
+    public static void playAlarm(Context context, boolean vibrar, int timeMillis) {
+        playAlarm(context, ToneGenerator.TONE_SUP_ERROR, vibrar, timeMillis);
     }
 
     /**
@@ -26,7 +29,7 @@ public class Alarms {
      * @param vibrar
      * @param timeMillis
      */
-    public static void reproduzirAlarme(final Context context, final int tone, final boolean vibrar, final int timeMillis) {
+    public static void playAlarm(final Context context, final int tone, final boolean vibrar, final int timeMillis) {
         if (threadReproduzindo) return;
         threadReproduzindo = true;
 

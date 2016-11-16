@@ -5,7 +5,7 @@ import android.util.Log;
 import java.io.Closeable;
 
 /**
- * Created by demantoide on 16/02/16.
+ * Created by Guilherme Biff Zarelli on 16/02/16.
  */
 public final class ThisClosable {
 

@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by demantoide on 10/07/15.
+ * Created by Guilherme Biff Zarelli on 10/07/15.
  */
 public class Arquivos {
 

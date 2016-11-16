@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import java.text.Normalizer;
 
 /**
- * Created by demantoide on 11/03/16.
+ * Created by Guilherme Biff Zarelli on 11/03/16.
  */
 public class StringUtils {
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)

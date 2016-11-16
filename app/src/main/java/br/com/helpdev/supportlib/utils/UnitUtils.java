@@ -3,7 +3,7 @@ package br.com.helpdev.supportlib.utils;
 import android.content.res.Resources;
 
 /**
- * Created by demantoide on 16/11/16.
+ * Created by Guilherme Biff Zarelli on 16/11/16.
  */
 
 public class UnitUtils {
