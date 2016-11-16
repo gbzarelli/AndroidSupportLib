@@ -2,6 +2,9 @@ package br.com.helpdev.supportlib.utils;
 import android.app.Activity;
 import android.view.View;
 
+/**
+ *
+ */
 public final class ViewUtils {
 
     private ViewUtils() {

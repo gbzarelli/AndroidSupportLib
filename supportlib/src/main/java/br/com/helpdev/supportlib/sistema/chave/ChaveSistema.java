@@ -14,7 +14,7 @@ import java.util.HashMap;
 import br.com.helpdev.supportlib.sistema.seguranca.MD5;
 
 /**
- * @author guilherme
+ * @author Guilherme Biff Zarelli
  */
 public class ChaveSistema {
 
