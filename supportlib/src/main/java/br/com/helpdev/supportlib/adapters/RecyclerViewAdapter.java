@@ -18,7 +18,7 @@ import br.com.helpdev.supportlib.utils.UnitUtils;
  *
  * @param <T> is type of list
  */
-public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter {
+public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     protected static final int NORMAL_ITEM = Integer.MIN_VALUE;
     protected static final int LAST_ITEM = Integer.MAX_VALUE;
@@ -36,7 +36,8 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter {
      * @param context
      * @param lista
      * @param layout
-     * @param marginBottom in px
+     * @param marginBottom    in px
+     * @param classViewHolder if inner Class, must be static.
      */
     public RecyclerViewAdapter(Context context, List<T> lista, int layout, int marginBottom, Class classViewHolder) {
         this.classViewHolder = classViewHolder;
@@ -48,7 +49,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         try {
             View view = inflater.inflate(layout, parent, false);
             if (viewType == LAST_ITEM && marginBottom > 0) {
@@ -58,14 +59,14 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter {
             }
 
             Constructor constructor = classViewHolder.getConstructor(View.class);
-            RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) constructor.newInstance(view);
+            VH vh = (VH) constructor.newInstance(view);
 
             view.setTag(vh);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
-                        RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) view.getTag();
+                        VH vh = (VH) view.getTag();
                         int position = vh.getAdapterPosition();
                         listener.onClickItem(view, position, lista.get(position));
                     }
@@ -75,7 +76,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter {
                 @Override
                 public boolean onLongClick(View view) {
                     if (listener != null) {
-                        RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) view.getTag();
+                        VH vh = (VH) view.getTag();
                         int position = vh.getAdapterPosition();
                         return listener.onLongClickItem(view, position, lista.get(position));
                     }
