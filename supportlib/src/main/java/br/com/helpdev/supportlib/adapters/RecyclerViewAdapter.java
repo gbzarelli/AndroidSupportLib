@@ -31,7 +31,7 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
     private final int layout;
 
     private List<T> lista;
-    private RecyclerAdapterListener listener;
+    private RecyclerAdapterListener<T> listener;
     private Class classViewHolder;
 
     /**
@@ -42,14 +42,13 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
      * @param classViewHolder if inner Class, must be static.
      */
     public RecyclerViewAdapter(@NonNull Context context, @NonNull List<T> lista, @NonNull int layout,
-                               @Nullable int marginBottom, @NonNull Class classViewHolder, @Nullable RecyclerAdapterListener listener) {
+                               @Nullable int marginBottom, @NonNull Class classViewHolder) {
         this.classViewHolder = ThisObjects.requireNonNull(classViewHolder);
         this.context = ThisObjects.requireNonNull(context);
         this.lista = ThisObjects.requireNonNull(lista);
         this.layout = ThisObjects.requireNonNull(layout);
         inflater = LayoutInflater.from(context);
         this.marginBottom = marginBottom;
-        this.listener = listener;
     }
 
     @Override
@@ -109,6 +108,10 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
 
     public Context getContext() {
         return context;
+    }
+
+    public void setListener(RecyclerAdapterListener<T> listener) {
+        this.listener = listener;
     }
 
     public List<T> getLista() {
