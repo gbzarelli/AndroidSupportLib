@@ -1,6 +1,8 @@
 package br.com.helpdev.supportlib.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,30 +24,32 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
 
     protected static final int NORMAL_ITEM = Integer.MIN_VALUE;
     protected static final int LAST_ITEM = Integer.MAX_VALUE;
-    protected final int marginBottom;
 
-    protected final Context context;
-    protected final LayoutInflater inflater;
+    private final int marginBottom;
+    private final Context context;
+    private final LayoutInflater inflater;
     private final int layout;
 
-    protected List<T> lista;
-    protected RecyclerAdapterListener listener;
-    protected Class classViewHolder;
+    private List<T> lista;
+    private RecyclerAdapterListener listener;
+    private Class classViewHolder;
 
     /**
      * @param context
      * @param lista
      * @param layout
-     * @param marginBottom    in px
+     * @param marginBottom    in DP
      * @param classViewHolder if inner Class, must be static.
      */
-    public RecyclerViewAdapter(Context context, List<T> lista, int layout, int marginBottom, Class classViewHolder) {
-        this.classViewHolder = classViewHolder;
+    public RecyclerViewAdapter(@NonNull Context context, @NonNull List<T> lista, @NonNull int layout,
+                               @Nullable int marginBottom, @NonNull Class classViewHolder, @Nullable RecyclerAdapterListener listener) {
+        this.classViewHolder = ThisObjects.requireNonNull(classViewHolder);
         this.context = ThisObjects.requireNonNull(context);
         this.lista = ThisObjects.requireNonNull(lista);
         this.layout = ThisObjects.requireNonNull(layout);
         inflater = LayoutInflater.from(context);
         this.marginBottom = marginBottom;
+        this.listener = listener;
     }
 
     @Override
@@ -54,7 +58,7 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
             View view = inflater.inflate(layout, parent, false);
             if (viewType == LAST_ITEM && marginBottom > 0) {
                 RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
-                lp.setMargins(0, 0, 0, UnitUtils.pxToDp(marginBottom));
+                lp.setMargins(lp.leftMargin, lp.topMargin, lp.rightMargin, lp.bottomMargin + UnitUtils.dpToPx(marginBottom));
                 view.setLayoutParams(lp);
             }
 
@@ -92,7 +96,7 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
     @Override
     public int getItemViewType(int position) {
         if (marginBottom > 0) {
-            return position == lista.size() ? LAST_ITEM : NORMAL_ITEM;
+            return position == (lista.size() - 1) ? LAST_ITEM : NORMAL_ITEM;
         }
         return super.getItemViewType(position);
     }
@@ -103,8 +107,12 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
         return lista != null ? lista.size() : 0;
     }
 
-    public void setListener(RecyclerAdapterListener listener) {
-        this.listener = listener;
+    public Context getContext() {
+        return context;
+    }
+
+    public List<T> getLista() {
+        return lista;
     }
 
     public interface RecyclerAdapterListener<T> {
