@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 import br.com.helpdev.supportlib.utils.ThisObjects;
@@ -14,8 +15,10 @@ import br.com.helpdev.supportlib.utils.UnitUtils;
 
 /**
  * Created by Felipe Barata on 11/05/16.
+ *
+ * @param <T> is type of list
  */
-public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter {
 
     protected static final int NORMAL_ITEM = Integer.MIN_VALUE;
     protected static final int LAST_ITEM = Integer.MAX_VALUE;
@@ -27,6 +30,7 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
 
     protected List<T> lista;
     protected RecyclerAdapterListener listener;
+    protected Class classViewHolder;
 
     /**
      * @param context
@@ -34,7 +38,8 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
      * @param layout
      * @param marginBottom in px
      */
-    public RecyclerViewAdapter(Context context, List<T> lista, int layout, int marginBottom) {
+    public RecyclerViewAdapter(Context context, List<T> lista, int layout, int marginBottom, Class classViewHolder) {
+        this.classViewHolder = classViewHolder;
         this.context = ThisObjects.requireNonNull(context);
         this.lista = ThisObjects.requireNonNull(lista);
         this.layout = ThisObjects.requireNonNull(layout);
@@ -43,7 +48,7 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         try {
             View view = inflater.inflate(layout, parent, false);
             if (viewType == LAST_ITEM && marginBottom > 0) {
@@ -51,14 +56,16 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
                 lp.setMargins(0, 0, 0, UnitUtils.pxToDp(marginBottom));
                 view.setLayoutParams(lp);
             }
-            VH vh = getViewHolder(view);
+
+            Constructor constructor = classViewHolder.getConstructor(View.class);
+            RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) constructor.newInstance(view);
 
             view.setTag(vh);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
-                        VH vh = (VH) view.getTag();
+                        RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) view.getTag();
                         int position = vh.getAdapterPosition();
                         listener.onClickItem(view, position, lista.get(position));
                     }
@@ -68,7 +75,7 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
                 @Override
                 public boolean onLongClick(View view) {
                     if (listener != null) {
-                        VH vh = (VH) view.getTag();
+                        RecyclerView.ViewHolder vh = (RecyclerView.ViewHolder) view.getTag();
                         int position = vh.getAdapterPosition();
                         return listener.onLongClickItem(view, position, lista.get(position));
                     }
@@ -98,8 +105,6 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
     public void setListener(RecyclerAdapterListener listener) {
         this.listener = listener;
     }
-
-    public abstract VH getViewHolder(View view);
 
     public interface RecyclerAdapterListener<T> {
         void onClickItem(View v, int position, T t);
