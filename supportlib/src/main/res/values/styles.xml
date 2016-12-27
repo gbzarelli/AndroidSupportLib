@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="textViewMyLayoutProgress">@style/TextView.MyLayoutProgress</item>
     </style>
 
     <style name="TextView.MyLayoutProgress" parent="@android:style/TextAppearance.Large">

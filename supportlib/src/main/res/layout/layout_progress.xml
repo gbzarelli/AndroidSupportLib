@@ -19,33 +19,33 @@
 
             <ProgressBar
                 android:id="@+id/progress_bar"
-                android:layout_marginTop="16dp"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:id="@+id/progress_tv_status"
-                android:layout_marginTop="16dp"
+                style="?textViewMyLayoutProgress"
                 android:layout_width="wrap_content"
-                android:textAllCaps="true"
                 android:layout_height="wrap_content"
-                style="@style/TextView.MyLayoutProgress"
-                android:gravity="center" />
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textAllCaps="true" />
 
             <Button
                 android:id="@+id/progress_bt_1"
+                style="?textViewMyLayoutProgress"
                 android:layout_width="match_parent"
-                style="@style/TextView.MyLayoutProgress"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/progress_bt_2"
+                style="?textViewMyLayoutProgress"
                 android:layout_width="match_parent"
-                style="@style/TextView.MyLayoutProgress"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="gone" />
