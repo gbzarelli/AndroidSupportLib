@@ -31,13 +31,13 @@
                 android:layout_width="wrap_content"
                 android:textAllCaps="true"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/TextView.MyLayoutProgress"
                 android:gravity="center" />
 
             <Button
                 android:id="@+id/progress_bt_1"
                 android:layout_width="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/TextView.MyLayoutProgress"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="gone" />
@@ -45,7 +45,7 @@
             <Button
                 android:id="@+id/progress_bt_2"
                 android:layout_width="match_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/TextView.MyLayoutProgress"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="gone" />
