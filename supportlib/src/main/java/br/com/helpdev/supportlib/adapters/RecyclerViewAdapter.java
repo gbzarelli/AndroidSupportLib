@@ -22,8 +22,14 @@ import br.com.helpdev.supportlib.utils.UnitUtils;
  */
 public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    protected static final int NORMAL_ITEM = Integer.MIN_VALUE;
-    protected static final int LAST_ITEM = Integer.MAX_VALUE;
+    public interface RecyclerAdapterListener<T> {
+        void onClickItem(View v, int position, T t);
+
+        boolean onLongClickItem(View v, int position, T t);
+    }
+
+    private static final int NORMAL_ITEM = Integer.MIN_VALUE;
+    private static final int LAST_ITEM = Integer.MAX_VALUE;
 
     private final int marginBottom;
     private final Context context;
@@ -105,7 +111,6 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
         onBindViewHolder(holder, getLista().get(position), position);
     }
 
-    abstract void onBindViewHolder(VH holder, T item, int position);
 
     @Override
     public int getItemCount() {
@@ -129,9 +134,5 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
         return lista;
     }
 
-    interface RecyclerAdapterListener<T> {
-        void onClickItem(View v, int position, T t);
-
-        boolean onLongClickItem(View v, int position, T t);
-    }
+    protected abstract void onBindViewHolder(VH holder, T item, int position);
 }
