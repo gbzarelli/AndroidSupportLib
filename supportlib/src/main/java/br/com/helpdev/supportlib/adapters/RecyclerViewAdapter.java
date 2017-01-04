@@ -100,6 +100,12 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
         return super.getItemViewType(position);
     }
 
+    @Override
+    public void onBindViewHolder(VH holder, int position) {
+        onBindViewHolder(holder, getLista().get(position), position);
+    }
+
+    abstract void onBindViewHolder(VH holder, T item, int position);
 
     @Override
     public int getItemCount() {
@@ -114,11 +120,16 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
         this.listener = listener;
     }
 
+    public void setLista(List<T> lista) {
+        this.lista = lista;
+        notifyDataSetChanged();
+    }
+
     public List<T> getLista() {
         return lista;
     }
 
-    public interface RecyclerAdapterListener<T> {
+    interface RecyclerAdapterListener<T> {
         void onClickItem(View v, int position, T t);
 
         boolean onLongClickItem(View v, int position, T t);
