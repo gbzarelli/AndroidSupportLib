@@ -47,14 +47,19 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
      * @param marginBottom    in DP
      * @param classViewHolder if inner Class, must be static.
      */
-    public RecyclerViewAdapter(@NonNull Context context, @NonNull List<T> lista, @NonNull int layout,
-                               @Nullable int marginBottom, @NonNull Class classViewHolder) {
+    public RecyclerViewAdapter(@NonNull Context context,
+                               @NonNull List<T> lista,
+                               @NonNull int layout,
+                               @Nullable int marginBottom,
+                               @NonNull Class classViewHolder,
+                               @Nullable RecyclerAdapterListener listener) {
         this.classViewHolder = ThisObjects.requireNonNull(classViewHolder);
         this.context = ThisObjects.requireNonNull(context);
         this.lista = ThisObjects.requireNonNull(lista);
         this.layout = ThisObjects.requireNonNull(layout);
         inflater = LayoutInflater.from(context);
         this.marginBottom = marginBottom;
+        this.listener = listener;
     }
 
     @Override
