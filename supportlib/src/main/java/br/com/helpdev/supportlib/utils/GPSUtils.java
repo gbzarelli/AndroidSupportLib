@@ -1,5 +1,8 @@
 package br.com.helpdev.supportlib.utils;
 
+import android.content.Context;
+import android.location.LocationManager;
+
 /**
  * Created by Guilherme Biff Zarelli on 15/03/16.
  */
@@ -26,4 +29,13 @@ public final class GPSUtils {
 
         return dist;
     }
+
+    public static boolean isGpsEnable(Context context) {
+        return isGpsEnable((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
+    }
+
+    public static boolean isGpsEnable(LocationManager locationManager) {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
 }

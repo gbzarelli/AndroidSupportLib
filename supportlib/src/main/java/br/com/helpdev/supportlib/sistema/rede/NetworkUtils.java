@@ -14,23 +14,25 @@ import br.com.helpdev.supportlib.sistema.RuntimeAndroid;
  */
 public final class NetworkUtils {
 
+
     public static final String LOG = "NetworkUtils";
 
     public static boolean ping(String hostUmed) {
-        System.out.println("executeCommand");
         RuntimeAndroid runtimeAndroid = new RuntimeAndroid();
         try {
-            int mExitValue = runtimeAndroid.getProcess("/system/bin/ping -c 1 " + hostUmed).waitFor();
-            System.out.println(" mExitValue " + mExitValue);
-            if (mExitValue == 0) {
-                return true;
-            } else {
-                return false;
+            Process process = runtimeAndroid.getProcess("/system/bin/ping -c 1 " + hostUmed);
+            try {
+                int mExitValue = process.waitFor();
+                if (mExitValue == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } finally {
+                process.destroy();
             }
-        } catch (InterruptedException ignore) {
+        } catch (Throwable ignore) {
             Log.e(LOG, "ping", ignore);
-        } catch (IOException e) {
-            Log.e(LOG, "ping", e);
         }
         return false;
     }

@@ -99,7 +99,8 @@ public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder>
             });
             return vh;
         } catch (Exception e) {
-            throw new RuntimeException("Error onCreateViewHolder", e);
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

@@ -41,7 +41,10 @@ public class WifiAP {
         return (WifiConfiguration) wifiApConfigurationMethod.invoke(wifi_manager);
     }
 
+
     /**
+     * <pre>
+     *  Para utilizar a configuração de AccessPoint, os IPS dos dispositivos devem seguir o padrão 192.168.43.XXX
      * Exemplo:
      * <br>WifiConfiguration netConfig = new WifiConfiguration();
      * <br>netConfig.SSID = "EVE03";
@@ -50,12 +53,29 @@ public class WifiAP {
      * <br>netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
      * <br>netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
      *
+     * Exemplo com senha e tipo de segurança WPA2 PSK
+     * WifiConfiguration netConfig = new WifiConfiguration();
+     * netConfig.SSID = "UMED-0000";
+     * netConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+     * netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+     * netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+     * netConfig.allowedKeyManagement.set(4);
+     * netConfig.preSharedKey = "12345678";
+     *
+     * </pre>
+     *
      * @param wifiConfiguration passar null para manter as configurações atuais
      * @param enable            habilitar ou nao o hotspot/wifi ap
      * @throws Exception
      */
     public void setWifiApEnable(WifiConfiguration wifiConfiguration, boolean enable) throws Exception {
         wifi_manager.setWifiEnabled(false);
+
+        if (enable && !getWifiApConfiguration().SSID.equals(wifiConfiguration.SSID)) {
+            Method wifiApConfigurationMethod = wifi_manager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
+            wifiApConfigurationMethod.invoke(wifi_manager, getWifiApConfiguration(), false);
+        }
+
         Method wifiApConfigurationMethod = wifi_manager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
         wifiApConfigurationMethod.invoke(wifi_manager, wifiConfiguration, enable);
         wifi_manager.saveConfiguration();

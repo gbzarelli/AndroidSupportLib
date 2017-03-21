@@ -18,12 +18,17 @@ import java.util.Locale;
  */
 public class LogCat {
     private static final String LOG = "LogCat";
+    public static final String PRIORITY_VERBOSE = "V";
+    public static final String PRIORITY_DEBUG = "D";
+    public static final String PRIORITY_INFO = "I";
+    public static final String PRIORITY_WARNING = "W";
+    public static final String PRIORITY_ERROR = "E";
 
     public static File extractLogToFile(Context context, String appName) {
-        return extractLogToFile(Environment.getExternalStorageDirectory(), context, appName);
+        return extractLogToFile(Environment.getExternalStorageDirectory(), context, appName, PRIORITY_VERBOSE);
     }
 
-    public static File extractLogToFile(File dir, Context context, String appName) {
+    public static File extractLogToFile(File dir, Context context, String appName, String priorityLog) {
         //set a file
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String fullName = appName.toUpperCase() + "_" + df.format(new Date()) + ".log";
@@ -31,7 +36,7 @@ public class LogCat {
         try {
             if (!file.exists()) file.createNewFile();
 
-            String command = String.format("logcat -d -v threadtime " + context.getPackageName() + "*:*");
+            String command = String.format("logcat -d -v threadtime " + context.getPackageName() + "*:" + priorityLog);
             Process process = Runtime.getRuntime().exec(command);
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
