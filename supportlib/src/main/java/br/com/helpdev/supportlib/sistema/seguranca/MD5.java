@@ -1,5 +1,6 @@
 
 package br.com.helpdev.supportlib.sistema.seguranca;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -7,6 +8,9 @@ import java.security.NoSuchAlgorithmException;
  * @author Guilherme Biff Zarelli
  */
 public class MD5 {
+    private MD5() {
+        throw new RuntimeException("No MD5!");
+    }
 
     public static String toMD5(String texto) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");

@@ -1,26 +1,47 @@
 package br.com.helpdev.supportlib.media;
 
 import android.app.Activity;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 
 /**
- * Created by Felipe Barata on 18/08/16.
+ * Created by felipe on 18/08/16.
  */
-public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback, Runnable {
+
+    public static final int DELAY_PREVIEW_PROCESS_DEFAULT = 1000;
+    private static final String TAG = "CameraPreview";
 
     private SurfaceHolder surfaceHolder;
-    private Camera camera;
+    protected Camera camera;
     private int cameraToUse;
-    private Activity activity;
+    protected Activity activity;
+    private int orientation;
+    protected static final int previewSizeWidth = 640;
+    protected static final int previewSizeHeight = 480;
+
+    private volatile boolean threadRunning = false;
+    private volatile byte[] imageYuv;
+    private final int delayPreviewProcess;
 
     public CameraPreview(Activity activity, int cameraToUse) {
+        this(activity, cameraToUse, DELAY_PREVIEW_PROCESS_DEFAULT);
+    }
+
+    /**
+     * @param activity
+     * @param cameraToUse Camera.CameraInfo.CAMERA_FACING_
+     */
+    public CameraPreview(Activity activity, int cameraToUse, int delayPreviewProcess) {
         super(activity);
+        this.delayPreviewProcess = delayPreviewProcess;
         this.cameraToUse = cameraToUse;
         this.activity = activity;
         // Implemente um SurfaceHolder.Callback para ser notificado quando a superficie e criada e destruida
@@ -35,31 +56,97 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         try {
             if (camera == null) {
                 this.camera = Camera.open(cameraToUse);
-                setCameraDisplayOrientation();
+                Camera.Parameters p = this.camera.getParameters();
+                p.setPreviewSize(previewSizeWidth, previewSizeHeight);
+                p.setPictureSize(previewSizeWidth, previewSizeHeight);
+                this.camera.setParameters(p);
             }
         } catch (Exception e) {
             Log.e(getClass().getName(), "surfaceCreated", e);
         }
     }
 
+    /**
+     *
+     */
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+    public void run() {
+        threadRunning = true;
+        while (threadRunning) {
+            try {
+                while (imageYuv == null) {
+                    Thread.sleep(1_000);
+                }
+                if (!threadRunning) return;
+
+                postProcessImage(preProcessImage(imageYuv));
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            try {
+                Thread.sleep(delayPreviewProcess);
+            } catch (Throwable t) {
+            } finally {
+                imageYuv = null;
+            }
+        }
+    }
+
+    protected byte[] preProcessImage(byte[] imageYuv) {
+        Camera.Parameters parameters = camera.getParameters();
+        Camera.Size size = parameters.getPreviewSize();
+
+
+        if (getOrientation() == Surface.ROTATION_270) {
+            imageYuv = CameraUtils.rotateYUV420Degree180(imageYuv, size.width, size.height);
+        } else if (getOrientation() == Surface.ROTATION_0) {
+            imageYuv = CameraUtils.rotateYUV420Degree270(imageYuv, size.width, size.height);
+        } else if (getOrientation() == Surface.ROTATION_180) {
+            imageYuv = CameraUtils.rotateYUV420Degree90(imageYuv, size.width, size.height);
+        }
+
+        YuvImage image = new YuvImage(imageYuv, parameters.getPreviewFormat(),
+                size.width, size.height, null);
+
+        ByteArrayOutputStream bufferImagePreviewJpg = new ByteArrayOutputStream();
+        image.compressToJpeg(new Rect(0, 0, image.getWidth(), image.getHeight()), 70, bufferImagePreviewJpg);
+        if (getOrientation() == Surface.ROTATION_270) {
+
+        }
+        return bufferImagePreviewJpg.toByteArray();
+    }
+
+    public void postProcessImage(byte[] image) {
+
+    }
+
+//    public byte[] getImageYuv() {
+//        return Arrays.copyOf(imageYuv, imageYuv.length);
+//    }
+
+    @Override
+    public void surfaceChanged(final SurfaceHolder surfaceHolder, int i, int i1, int i2) {
         // antes de mudar a orientacao da aplicaçao, deve-se parar a previa, rotacionar e entao comecar novamente
         if (this.surfaceHolder == null || camera == null) {//checa se a superficie esta pronta para receber dados da camera
             return;
         }
         //agora, recrie a previa da camera
         try {
+            setCameraDisplayOrientation();
             camera.setPreviewDisplay(this.surfaceHolder);
-            camera.startPreview();
-        } catch (IOException e) {
-            Log.d("ERROR", "Camera error on surfaceChanged " + e.getMessage());
+            onSurfaceChangedStartPreview();
+        } catch (Exception e) {
+            Log.e("ERROR", "Camera error on surfaceChanged " + e.getMessage(), e);
         }
+    }
+
+
+    protected void onSurfaceChangedStartPreview() {
+        startPreview();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        // o aplicativo tem cameras em apenas uma tela, se for usar em mais telas coloque esse codigo nas activities/fragments
         parar();
     }
 
@@ -71,10 +158,26 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
         surfaceHolder = null;
         camera = null;
+        threadRunning = false;
     }
 
     public final void tirarFoto(Camera.ShutterCallback shutter, Camera.PictureCallback raw, Camera.PictureCallback jpeg) {
-        camera.takePicture(shutter, raw, jpeg);
+        if (camera != null) {
+            camera.takePicture(shutter, raw, jpeg);
+        }
+    }
+
+    public void startPreview() {
+        if (camera == null) return;
+        camera.startPreview();
+        camera.setPreviewCallback(new Camera.PreviewCallback() {
+            @Override
+            public void onPreviewFrame(byte[] bytes, Camera camera) {
+                if (imageYuv != null) return;
+                imageYuv = bytes;
+            }
+        });
+        if (!threadRunning) new Thread(this).start();
     }
 
     public void setCameraDisplayOrientation() {
@@ -85,6 +188,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         int rotation = activity.getWindowManager().getDefaultDisplay()
                 .getRotation();
         int degrees = 0;
+
         switch (rotation) {
             case Surface.ROTATION_0:
                 degrees = 0;
@@ -107,6 +211,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         } else {  // back-facing
             result = (info.orientation - degrees + 360) % 360;
         }
+        orientation = rotation;
         camera.setDisplayOrientation(result);
+    }
+
+    public int getOrientation() {
+        return orientation;
     }
 }

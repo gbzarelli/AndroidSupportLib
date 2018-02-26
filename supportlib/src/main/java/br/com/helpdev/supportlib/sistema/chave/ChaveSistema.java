@@ -11,14 +11,47 @@ import android.telephony.TelephonyManager;
 
 import java.util.HashMap;
 
-import br.com.helpdev.supportlib.sistema.seguranca.MD5;
+import br.com.grupocriar.swapandroid.sistema.seguranca.MD5;
 
 /**
- * @author Guilherme Biff Zarelli
+ * @author guilherme
  */
 public class ChaveSistema {
 
-    private static HashMap<String, Integer> mapaLetras;
+    private static final HashMap<String, Integer> MAPA_LETRAS;
+
+    static {
+        MAPA_LETRAS = new HashMap<String, Integer>();
+        MAPA_LETRAS.put("A", 8);
+        MAPA_LETRAS.put("B", 7);
+        MAPA_LETRAS.put("C", 6);
+        MAPA_LETRAS.put("D", 5);
+        MAPA_LETRAS.put("E", 4);
+        MAPA_LETRAS.put("F", 3);
+        MAPA_LETRAS.put("G", 2);
+        MAPA_LETRAS.put("H", 1);
+        MAPA_LETRAS.put("I", 9);
+        MAPA_LETRAS.put("J", 8);
+        MAPA_LETRAS.put("K", 7);
+        MAPA_LETRAS.put("L", 6);
+        MAPA_LETRAS.put("M", 5);
+        MAPA_LETRAS.put("N", 4);
+        MAPA_LETRAS.put("O", 3);
+        MAPA_LETRAS.put("P", 2);
+        MAPA_LETRAS.put("Q", 1);
+        MAPA_LETRAS.put("R", 9);
+        MAPA_LETRAS.put("S", 8);
+        MAPA_LETRAS.put("T", 7);
+        MAPA_LETRAS.put("U", 6);
+        MAPA_LETRAS.put("V", 5);
+        MAPA_LETRAS.put("X", 4);
+        MAPA_LETRAS.put("W", 3);
+        MAPA_LETRAS.put("Y", 2);
+        MAPA_LETRAS.put("Z", 1);
+    }
+
+    private ChaveSistema() {
+    }
 
     public static String formataChave(String chave) {
         StringBuilder sb = new StringBuilder();
@@ -47,6 +80,7 @@ public class ChaveSistema {
      * @return
      * @throws Throwable
      */
+    @Deprecated
     public static String getChaveSegura(Context activity) throws Throwable {
         ChaveSistema chaveSistema = new ChaveSistema();
 
@@ -84,35 +118,6 @@ public class ChaveSistema {
         return chaveSistema.criptografarChave(chaveSistema.getInformacoesDispositivos(activity));
     }
 
-    private ChaveSistema() {
-        mapaLetras = new HashMap<String, Integer>();
-        mapaLetras.put("A", 8);
-        mapaLetras.put("B", 7);
-        mapaLetras.put("C", 6);
-        mapaLetras.put("D", 5);
-        mapaLetras.put("E", 4);
-        mapaLetras.put("F", 3);
-        mapaLetras.put("G", 2);
-        mapaLetras.put("H", 1);
-        mapaLetras.put("I", 9);
-        mapaLetras.put("J", 8);
-        mapaLetras.put("K", 7);
-        mapaLetras.put("L", 6);
-        mapaLetras.put("M", 5);
-        mapaLetras.put("N", 4);
-        mapaLetras.put("O", 3);
-        mapaLetras.put("P", 2);
-        mapaLetras.put("Q", 1);
-        mapaLetras.put("R", 9);
-        mapaLetras.put("S", 8);
-        mapaLetras.put("T", 7);
-        mapaLetras.put("U", 6);
-        mapaLetras.put("V", 5);
-        mapaLetras.put("X", 4);
-        mapaLetras.put("W", 3);
-        mapaLetras.put("Y", 2);
-        mapaLetras.put("Z", 1);
-    }
 
     private String criptografarChave(String k) throws Throwable {
         StringBuilder chave = new StringBuilder();
@@ -123,7 +128,7 @@ public class ChaveSistema {
         return chave.toString().toUpperCase();
     }
 
-    public String getInformacoesDispositivos(Context context) {
+    private String getInformacoesDispositivos(Context context) {
         StringBuilder preChave = new StringBuilder();
         TelephonyManager tManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
@@ -169,7 +174,7 @@ public class ChaveSistema {
                 v = Integer.parseInt(comp.substring(i, i + 1));
                 op = 0;
             } else if (Character.isLetter(comp.charAt(i))) {
-                v = mapaLetras.get(comp.substring(i, i + 1));
+                v = MAPA_LETRAS.get(comp.substring(i, i + 1));
                 op = 1;
             }
 

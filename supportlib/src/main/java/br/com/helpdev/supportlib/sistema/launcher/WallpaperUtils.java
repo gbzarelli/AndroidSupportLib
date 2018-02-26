@@ -7,13 +7,15 @@ import android.graphics.BitmapFactory;
 import java.io.IOException;
 
 /**
- * Created by Guilherme Biff Zarelli on 01/07/16.
+ * Created by demantoide on 01/07/16.
  */
 public class WallpaperUtils {
+    private WallpaperUtils() {
+        throw new RuntimeException("No WallpaperUtils!");
+    }
 
     public static void setWallpaperDrawable(Context context, int resIdDrawable) {
-        WallpaperManager wallpaperManager =
-                WallpaperManager.getInstance(context);
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
         try {
             wallpaperManager.setBitmap(BitmapFactory.decodeResource(context.getResources(), resIdDrawable));
         } catch (IOException e) {

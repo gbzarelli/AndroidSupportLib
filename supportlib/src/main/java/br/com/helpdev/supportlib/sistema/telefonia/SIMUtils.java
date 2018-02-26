@@ -3,10 +3,10 @@ package br.com.helpdev.supportlib.sistema.telefonia;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import br.com.helpdev.supportlib.sistema.rede.NetworkUtils;
+import br.com.grupocriar.swapandroid.sistema.rede.NetworkUtils;
 
 /**
- * Created by Guilherme Biff Zarelli on 26/08/16.
+ * Created by demantoide on 26/08/16.
  */
 public class SIMUtils {
 

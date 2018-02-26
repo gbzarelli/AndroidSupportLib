@@ -16,6 +16,9 @@ import java.util.Date;
 public class PersistenciaSerial<T> {
 
     private static final String LOG = "PersistenciaSerial";
+    private static final String FILE_EXT_1 = ".1";
+    private static final String FILE_EXT_2 = ".2";
+    private static final String FILE_EXT_BKP = ".BKP";
 
     private File path;
     private String name;
@@ -26,8 +29,8 @@ public class PersistenciaSerial<T> {
     }
 
     private File getFileWrite() throws Exception {
-        File file1 = new File(this.path, name + ".1");
-        File file2 = new File(this.path, name + ".2");
+        File file1 = new File(this.path, name + FILE_EXT_1);
+        File file2 = new File(this.path, name + FILE_EXT_2);
 
         if (file1.exists() && file1.lastModified() > new Date().getTime()) {
             file1.delete();
@@ -55,22 +58,38 @@ public class PersistenciaSerial<T> {
     }
 
     public boolean persistir(T objeto) throws Exception {
+        if (objeto == null) {
+            Log.w(LOG, "OBJETO A SER GRAVADO NULLO, RETORNO SEM GRAVAÇÃO");
+            return false;
+        }
         File file = getFileWrite();
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(objeto);
         oos.close();
+
+
+        File bkp = new File(this.path, name + FILE_EXT_BKP);
+        if (!bkp.exists()) {
+            Log.d(LOG, "GRAVANDO ARQUIVO DE BKP");
+            fos = new FileOutputStream(bkp);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(objeto);
+            oos.close();
+        }
+
         return true;
     }
 
     public T pegarObjeto() throws Exception {
-        File file1 = new File(this.path, name + ".1");
-        File file2 = new File(this.path, name + ".2");
+        File file1 = new File(this.path, name + FILE_EXT_1);
+        File file2 = new File(this.path, name + FILE_EXT_2);
+        File file3 = new File(this.path, name + FILE_EXT_BKP);
         if (file1.lastModified() >= file2.lastModified()) {
-            return carregaArquivo(file1, file2);
+            return carregaArquivo(file1, file2, file3);
         }
 
-        return carregaArquivo(file2, file1);
+        return carregaArquivo(file2, file1, file3);
     }
 
     private T carregaArquivo(File... files) {
@@ -103,9 +122,11 @@ public class PersistenciaSerial<T> {
     }
 
     public void removerObjetos() throws Exception {
-        File file1 = new File(this.path, name + ".1");
-        File file2 = new File(this.path, name + ".2");
+        File file1 = new File(this.path, name + FILE_EXT_1);
+        File file2 = new File(this.path, name + FILE_EXT_2);
+        File file3 = new File(this.path, name + FILE_EXT_BKP);
         file1.delete();
         file2.delete();
+        file3.delete();
     }
 }

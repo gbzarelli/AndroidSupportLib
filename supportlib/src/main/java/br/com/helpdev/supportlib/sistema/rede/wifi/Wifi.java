@@ -1,81 +1,57 @@
 package br.com.helpdev.supportlib.sistema.rede.wifi;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
- * Created by Guilherme Biff Zarelli on 26/07/15.
+ * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+ * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+ * <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+ * Created by demantoide on 26/07/15.
  */
 public class Wifi {
+    public static final String SECURITY_WEP = "WEP";
+    public static final String SECURITY_WPA = "WPA";
+    public static final String SECURITY_OPEN = "OPEN";
+
     private static final String LOG = "Wifi";
 
-    public static void conectarApAsync(final Activity activity, final String ssid, final String pass) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    conectarAp(activity, ssid, pass);
-                } catch (Exception e) {
-                    Log.e(LOG, "connectAP", e);
-                }
-            }
-        }.start();
+    private Wifi() {
+        throw new IllegalArgumentException("No Wifi");
     }
 
-    public static void conectarAp(final Activity activity, final String ssid, final String pass) throws Exception {
-        WifiAP wap = new WifiAP(activity);
-        WifiConfiguration wc = new WifiConfiguration();
-        wc.SSID = ssid;
-
-        wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-        wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-        wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-//                    wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-//                    wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-
-        wc.priority = 1;
-        wc.preSharedKey = pass;
-        wc.wepTxKeyIndex = 0;
-
-        wap.setWifiApEnable(null, false);
-        wap.setWifiApEnable(wc, true);
-    }
-
-    public static void enableWifi(Activity activity) {
-        WifiManager wifiManager = getWifiManager(activity);
-        if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLED ||
-                wifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLING) {
-            wifiManager.setWifiEnabled(true);
-        }
-    }
-
-    public static void desligarAP(Activity activity) throws Exception {
-        WifiAP wap = new WifiAP(activity);
-        wap.setWifiApEnable(null, false);
-    }
 
     public static WifiManager getWifiManager(Context activity) {
         return (WifiManager) activity.getSystemService(Activity.WIFI_SERVICE);
     }
 
-    public static void connectSSIDAsync(final Activity activity, final String networkSSID, final String networkPass) {
+    @SuppressLint("MissingPermission")
+    public static boolean isWifiEnabled(WifiManager wifiManager) {
+        if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLED ||
+                wifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLING) {
+            return false;
+        }
+        return true;
+    }
+
+
+    @SuppressLint("MissingPermission")
+    public static void connectSSIDAsync(final Context activity, final String networkSSID, final String networkPass, final String security) {
         new Thread() {
             @Override
             public void run() {
                 try {
-                    connectSSID(activity, networkSSID, networkPass);
+                    connectSSID(activity, networkSSID, networkPass, security);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -83,10 +59,15 @@ public class Wifi {
         }.start();
     }
 
+    @SuppressLint("MissingPermission")
     public static boolean isConnectedWith(Context context, String ssid) {
         WifiManager wifiManager = getWifiManager(context);
-        if (wifiManager != null && wifiManager.getConnectionInfo() != null) {
-            String ssid1 = wifiManager.getConnectionInfo().getSSID();
+        if (wifiManager == null || !isWifiEnabled(wifiManager)) {
+            return false;
+        }
+        WifiInfo wi = wifiManager.getConnectionInfo();
+        if (wi != null && wi.getSupplicantState() == SupplicantState.COMPLETED) {
+            String ssid1 = wi.getSSID();
             if (!TextUtils.isEmpty(ssid1) && ssid1.toLowerCase().contains(ssid.toLowerCase())) {
                 return true;
             }
@@ -94,17 +75,39 @@ public class Wifi {
         return false;
     }
 
-    public static void connectSSID(Activity activity, String networkSSID, String networkPass) throws Exception {
-        Log.i(LOG, "networkSSID: {" + networkSSID + "}");
-        Log.i(LOG, "networkPass: {" + networkPass + "}");
+    @SuppressLint("MissingPermission")
+    public static String getSSID(Context context) {
+        return getSSID(getWifiManager(context));
+    }
+
+    @SuppressLint("MissingPermission")
+    public static String getSSID(WifiManager wifiManager) {
+        try {
+            if (wifiManager == null || !isWifiEnabled(wifiManager)) {
+                return null;
+            }
+            WifiInfo wi = wifiManager.getConnectionInfo();
+            if (wi != null && wi.getSupplicantState() == SupplicantState.COMPLETED && !TextUtils.isEmpty(wi.getSSID()))
+                return formatSSID(wi.getSSID());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String formatSSID(String ssid) {
+        return ssid.replaceAll(Pattern.quote("\""), "");
+    }
+
+    @SuppressLint("MissingPermission")
+    public static int connectSSID(Context activity, String networkSSID, String networkPass, String security) throws Exception {
         final WifiManager wm = getWifiManager(activity);
         if (wm == null) {
-            return;
+            return -1;
         }
         try {
-            WifiAP wifiAP = new WifiAP(activity);
-            if (wifiAP.getWifiApState() != WifiAP.WIFI_AP_STATE_DISABLED) {
-                wifiAP.setWifiApEnable(null, false);
+            if (WifiAP.getWifiApState(wm) != WifiAP.WIFI_AP_STATE_DISABLED) {
+                WifiAP.desligarAP(wm);
             }
         } catch (Exception e) {
             Log.e(LOG, "run", e);
@@ -127,7 +130,7 @@ public class Wifi {
                 && wm.getConnectionInfo().getSSID() != null
                 && wm.getConnectionInfo().getSSID().contains(networkSSID)) {
             Log.i(LOG, "wifi já conectado a rede");
-            return;
+            return wm.getConnectionInfo().getNetworkId();
         }
 
         WifiConfiguration wifiConfiguration = null;
@@ -141,46 +144,87 @@ public class Wifi {
             }
         }
         if (wifiConfiguration == null) {
-            Log.i(LOG, "wifiConfiguration not found, creating network...");
-            WifiConfiguration wc = new WifiConfiguration();
-            wc.SSID = networkSSID;
+            wifiConfiguration = new WifiConfiguration();
+            wifiConfiguration.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
+            wifiConfiguration.status = WifiConfiguration.Status.ENABLED;
+            wifiConfiguration.priority = 40;
 
-            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-            wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-            wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            if (security.contains(SECURITY_WEP)) {
+                Log.v(LOG, "Configuring WEP");
+                wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wifiConfiguration.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+                wifiConfiguration.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+                wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
 
-            wc.preSharedKey = networkPass;
-            wc.wepTxKeyIndex = 0;
+                if (networkPass.matches("^[0-9a-fA-F]+$")) {
+                    wifiConfiguration.wepKeys[0] = networkPass;
+                } else {
+                    wifiConfiguration.wepKeys[0] = "\"".concat(networkPass).concat("\"");
+                }
 
-            int id = wm.addNetwork(wc);
+                wifiConfiguration.wepTxKeyIndex = 0;
+
+            } else if (security.contains(SECURITY_WPA)) {
+                Log.v(LOG, "Configuring WPA");
+
+                wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+
+                wifiConfiguration.preSharedKey = "\"" + networkPass + "\"";
+
+            } else {
+                Log.v(LOG, "Configuring OPEN network");
+                wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wifiConfiguration.allowedAuthAlgorithms.clear();
+                wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            }
+
+            int id = wm.addNetwork(wifiConfiguration);
             wm.saveConfiguration();
-            wc.networkId = id;
+            wifiConfiguration.networkId = id;
+            Log.v(LOG, "Add result " + id);
         }
-        connectNetworkConfiguration(wm, wifiConfiguration);
+        if (wifiConfiguration.networkId != -1) {
+            connectNetworkConfiguration(wm, wifiConfiguration.networkId);
+        }
+        return wifiConfiguration.networkId;
     }
 
-
-    public static void connectNetworkConfiguration(WifiManager wm, WifiConfiguration wifiConfiguration) throws Exception {
-        Log.i(LOG, "idNetWork: {" + wifiConfiguration.networkId + "}");
+    @SuppressLint("MissingPermission")
+    public static void connectNetworkConfiguration(WifiManager wm, int networkId) throws Exception {
         wm.disconnect();
-        Log.i(LOG, "Desconectando...");
-
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
         }
+        wm.enableNetwork(networkId, true);
+    }
 
-        Log.i(LOG, "Conectando...");
-        if (wm.enableNetwork(wifiConfiguration.networkId, true)) {
-            Log.i(LOG, "conectado");
-        } else {
-            Log.i(LOG, "falha ao conectarEMS");
+
+    @SuppressLint("MissingPermission")
+    public static void enableWifi(Activity activity) {
+        WifiManager wifiManager = Wifi.getWifiManager(activity);
+        if (!Wifi.isWifiEnabled(wifiManager)) {
+            wifiManager.setWifiEnabled(true);
         }
     }
 }

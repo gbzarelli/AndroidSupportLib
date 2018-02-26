@@ -1,7 +1,7 @@
 package br.com.helpdev.supportlib.sistema.telefonia;
 
 /**
- * Created by Guilherme Biff Zarelli on 08/07/15.
+ * Created by demantoide on 08/07/15.
  */
 public class ObTelefone {
     public ObTelefone(String mensagemParaDiscagem, String telefone) {

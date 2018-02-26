@@ -1,13 +1,11 @@
 package br.com.helpdev.supportlib.utils;
 
-import android.content.Context;
-import android.location.LocationManager;
-
 /**
- * Created by Guilherme Biff Zarelli on 15/03/16.
+ * Created by demantoide on 15/03/16.
  */
 public final class GPSUtils {
     private GPSUtils() {
+        throw new RuntimeException("No GPSUtils!");
     }
 
     public static double calculaDistanciaMetros(double lat1, double lng1, double lat2, double lng2) {
@@ -25,17 +23,7 @@ public final class GPSUtils {
                 * Math.cos(Math.toRadians(lat1))
                 * Math.cos(Math.toRadians(lat2));
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double dist = earthRadius * c;
 
-        return dist;
+        return earthRadius * c;
     }
-
-    public static boolean isGpsEnable(Context context) {
-        return isGpsEnable((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
-    }
-
-    public static boolean isGpsEnable(LocationManager locationManager) {
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
 }

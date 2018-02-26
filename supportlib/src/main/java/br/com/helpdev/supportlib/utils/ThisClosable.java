@@ -5,15 +5,14 @@ import android.util.Log;
 import java.io.Closeable;
 
 /**
- * Created by Guilherme Biff Zarelli on 16/02/16.
+ * Created by demantoide on 16/02/16.
  */
 public final class ThisClosable {
-
+    private ThisClosable() {
+        throw new RuntimeException("No ThisClosable!");
+    }
     private static final String LOG = "ThisClosable";
 
-    private ThisClosable() {
-        throw new IllegalArgumentException();
-    }
 
     public static void fecha(Object closeable) {
         if (closeable != null) {

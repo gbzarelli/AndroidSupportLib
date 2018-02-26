@@ -8,8 +8,10 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
+import br.com.grupocriar.swapandroid.R;
+
 /**
- * Created by Guilherme Biff Zarelli on 08/07/15.
+ * Created by demantoide on 08/07/15.
  */
 public class Telefone implements DialogInterface.OnClickListener {
 
@@ -31,10 +33,10 @@ public class Telefone implements DialogInterface.OnClickListener {
         this.indice = indice;
         AlertDialog.Builder alerta = new AlertDialog.Builder(atividade);
         alerta.setCancelable(false);
-        alerta.setTitle("Atenção");
+        alerta.setTitle(atividade.getString(R.string.app_name));
         alerta.setMessage(obTelefones.get(indice).getMensagemParaDiscagem());
-        alerta.setPositiveButton("Confirmar", this);
-        alerta.setNegativeButton("Cancelar", this);
+        alerta.setPositiveButton(R.string.bt_continuar, this);
+        alerta.setNegativeButton(R.string.bt_cancelar, this);
 
         alerta.show();
     }

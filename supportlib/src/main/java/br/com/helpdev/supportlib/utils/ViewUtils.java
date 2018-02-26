@@ -1,14 +1,14 @@
 package br.com.helpdev.supportlib.utils;
+
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.view.Surface;
 import android.view.View;
 
-/**
- *
- */
 public final class ViewUtils {
 
     private ViewUtils() {
-        throw new IllegalArgumentException("No ViewUtils");
+        throw new RuntimeException("No ViewUtils");
     }
 
     /**
@@ -37,8 +37,8 @@ public final class ViewUtils {
      * </pre>
      *
      * @param view que representa o <i>Parent</i> utilizado para buscar a referencia da <i>View</i>
-     * @param id       da <i>View</i> presente da classe <i>R</i> do projeto
-     * @param <T>      tipo da <i>View</i> retornada
+     * @param id   da <i>View</i> presente da classe <i>R</i> do projeto
+     * @param <T>  tipo da <i>View</i> retornada
      * @return referência à <i>View</i>
      */
     public static <T extends View> T find(View view, int id) {
@@ -48,4 +48,50 @@ public final class ViewUtils {
 
         return (T) view.findViewById(id);
     }
+
+    /**
+     * @param activity
+     * @param screenOrientation ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+     */
+    public static boolean lockScreenOrientation(Activity activity, int screenOrientation) {
+        activity.setRequestedOrientation(screenOrientation);
+        return true;
+    }
+
+    public static boolean releaseScreenOrientation(Activity activity) {
+        return lockScreenOrientation(activity, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
+    public static boolean lockCurrentScreenOrientation(Activity activity) {
+        return lockScreenOrientation(activity, activity.getRequestedOrientation());
+    }
+
+    /**
+     * @param activity
+     * @param screenRotation Surface.ROTATION_0 / 90 / 180 / 270
+     */
+    public static boolean lockScreenRotation(Activity activity, int screenRotation) {
+        if (screenRotation > -1) {
+            int orientation = activity.getRequestedOrientation();
+            switch (screenRotation) {
+                case Surface.ROTATION_0:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    break;
+                case Surface.ROTATION_90:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case Surface.ROTATION_180:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+                    break;
+                case Surface.ROTATION_270:
+                    orientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                    break;
+            }
+            return lockScreenOrientation(activity, orientation);
+        } else {
+            return false;
+        }
+    }
+
+
 }

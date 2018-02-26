@@ -1,6 +1,5 @@
 package br.com.helpdev.supportlib.sistema.log;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -14,21 +13,32 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by Guilherme Biff Zarelli on 03/02/16.
+ * Created by demantoide on 03/02/16.
  */
-public class LogCat {
-    private static final String LOG = "LogCat";
+public class LogCatExtractor {
+    private static final String LOG = "LogCatExtractor";
     public static final String PRIORITY_VERBOSE = "V";
     public static final String PRIORITY_DEBUG = "D";
     public static final String PRIORITY_INFO = "I";
     public static final String PRIORITY_WARNING = "W";
     public static final String PRIORITY_ERROR = "E";
 
-    public static File extractLogToFile(Context context, String appName) {
-        return extractLogToFile(Environment.getExternalStorageDirectory(), context, appName, PRIORITY_VERBOSE);
+    private LogCatExtractor() {
+        throw new RuntimeException("No LogCatExtractor!");
     }
 
-    public static File extractLogToFile(File dir, Context context, String appName, String priorityLog) {
+    public static File extractLogToFile(String packageName, String appName) {
+        return extractLogToFile(Environment.getExternalStorageDirectory(), packageName, appName, PRIORITY_VERBOSE);
+    }
+
+    /**
+     * @param dir
+     * @param packageName context.getPackageName()
+     * @param appName
+     * @param priorityLog
+     * @return
+     */
+    public static File extractLogToFile(File dir, String packageName, String appName, String priorityLog) {
         //set a file
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String fullName = appName.toUpperCase() + "_" + df.format(new Date()) + ".log";
@@ -36,7 +46,7 @@ public class LogCat {
         try {
             if (!file.exists()) file.createNewFile();
 
-            String command = String.format("logcat -d -v threadtime " + context.getPackageName() + "*:" + priorityLog);
+            String command = String.format("logcat -d -v threadtime " + packageName + "*:" + priorityLog);
             Process process = Runtime.getRuntime().exec(command);
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));

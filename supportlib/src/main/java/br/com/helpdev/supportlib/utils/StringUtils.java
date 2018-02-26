@@ -1,16 +1,16 @@
 package br.com.helpdev.supportlib.utils;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.text.TextUtils;
 
 import java.text.Normalizer;
 
 /**
- * Created by Guilherme Biff Zarelli on 11/03/16.
+ * Created by demantoide on 11/03/16.
  */
 public class StringUtils {
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    private StringUtils() {
+        throw new RuntimeException("No StringUtils!");
+    }
     public static String removeAccentuation(String texto) {
         if(TextUtils.isEmpty(texto)) {
            return "";

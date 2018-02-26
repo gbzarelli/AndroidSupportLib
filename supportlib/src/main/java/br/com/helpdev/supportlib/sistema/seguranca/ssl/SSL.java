@@ -12,9 +12,13 @@ import javax.net.ssl.TrustManager;
 
 
 /**
- * Created by Guilherme Biff Zarelli on 15/01/16.
+ * Created by demantoide on 15/01/16.
  */
 public class SSL {
+    private SSL() {
+        throw new RuntimeException("No SSL!");
+    }
+
     public static void allowAllSSL() {
         javax.net.ssl.HttpsURLConnection
                 .setDefaultHostnameVerifier(new HostnameVerifier() {
