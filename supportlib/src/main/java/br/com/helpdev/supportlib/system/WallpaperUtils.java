@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.system;
+package br.com.helpdev.supportlib.system;
 
 import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory;
 import java.io.IOException;
 
 /**
- * Created by demantoide on 01/07/16.
+ * Created by Guilherme Biff Zarelli on 01/07/16.
  */
 public class WallpaperUtils {
     private WallpaperUtils() {

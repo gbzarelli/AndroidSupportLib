@@ -1,13 +1,13 @@
-package br.com.grupocriar.swapandroid.telephony;
+package br.com.helpdev.supportlib.telephony;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import br.com.grupocriar.swapandroid.io.network.NetworkUtils;
+import br.com.helpdev.supportlib.io.network.NetworkUtils;
 
 /**
- * Created by demantoide on 26/08/16.
+ * Created by Guilherme Biff Zarelli on 26/08/16.
  */
 public class SIMUtils {
     private SIMUtils() {

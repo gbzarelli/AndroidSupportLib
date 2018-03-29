@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.system;
+package br.com.helpdev.supportlib.system;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,7 @@ public class PowerUtils {
     }
 
     public static int getBatteryLevel(Context context) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             BatteryManager bm = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
             return bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
         } else {

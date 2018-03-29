@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.system;
+package br.com.helpdev.supportlib.system;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,7 +9,7 @@ import android.os.Bundle;
 import java.io.IOException;
 
 /**
- * Created by demantoide on 17/03/16.
+ * Created by Guilherme Biff Zarelli on 17/03/16.
  */
 public class RuntimeAndroid {
     private RuntimeAndroid() {

@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.install;
+package br.com.helpdev.supportlib.io.install;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.provider.Settings;
 import java.io.File;
 
 /**
- * Created by demantoide on 16/03/16.
+ * Created by Guilherme Biff Zarelli on 16/03/16.
  */
 public final class Installer {
     private Installer() {

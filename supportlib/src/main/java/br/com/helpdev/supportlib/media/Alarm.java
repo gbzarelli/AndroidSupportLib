@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media;
+package br.com.helpdev.supportlib.media;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.os.Vibrator;
 
 /**
- * Created by demantoide on 06/07/16.
+ * Created by Guilherme Biff Zarelli on 06/07/16.
  */
 public class Alarm {
 

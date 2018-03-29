@@ -1,7 +1,7 @@
-package br.com.grupocriar.swapandroid.io.network.wifi;
+package br.com.helpdev.supportlib.io.network.wifi;
 
 /**
- * Created by demantoide on 29/09/15.
+ * Created by Guilherme Biff Zarelli on 29/09/15.
  */
 
 import android.annotation.SuppressLint;

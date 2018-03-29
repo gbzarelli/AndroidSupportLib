@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.utils;
+package br.com.helpdev.supportlib.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

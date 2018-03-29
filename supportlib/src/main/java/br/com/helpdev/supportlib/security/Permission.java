@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.security;
+package br.com.helpdev.supportlib.security;
 
 import android.content.pm.PackageManager;
 import android.os.Build;

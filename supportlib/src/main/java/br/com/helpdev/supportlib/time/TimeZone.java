@@ -1,11 +1,11 @@
-package br.com.grupocriar.swapandroid.time;
+package br.com.helpdev.supportlib.time;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * Created by demantoide on 30/09/16.
+ * Created by Guilherme Biff Zarelli on 30/09/16.
  */
 
 public class TimeZone {

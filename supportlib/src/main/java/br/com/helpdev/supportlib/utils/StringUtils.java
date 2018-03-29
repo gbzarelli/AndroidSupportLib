@@ -1,11 +1,11 @@
-package br.com.grupocriar.swapandroid.utils;
+package br.com.helpdev.supportlib.utils;
 
 import android.text.TextUtils;
 
 import java.text.Normalizer;
 
 /**
- * Created by demantoide on 11/03/16.
+ * Created by Guilherme Biff Zarelli on 11/03/16.
  */
 public class StringUtils {
     private StringUtils() {

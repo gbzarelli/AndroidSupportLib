@@ -1,10 +1,10 @@
-package br.com.grupocriar.swapandroid.ui;
+package br.com.helpdev.supportlib.ui;
 
 import android.content.res.Resources;
 import android.util.TypedValue;
 
 /**
- * Created by demantoide on 16/11/16.
+ * Created by Guilherme Biff Zarelli on 16/11/16.
  */
 
 public class UnitUtils {

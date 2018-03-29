@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.notification;
+package br.com.helpdev.supportlib.notification;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 
 /**
- * Created by demantoide on 14/03/16.
+ * Created by Guilherme Biff Zarelli on 14/03/16.
  */
 public class NotificationUtils {
 

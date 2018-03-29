@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.install;
+package br.com.helpdev.supportlib.io.install;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
-import br.com.grupocriar.swapandroid.io.files.FileUtils;
+import br.com.helpdev.supportlib.io.files.FileUtils;
 
 /**
  * Permission:

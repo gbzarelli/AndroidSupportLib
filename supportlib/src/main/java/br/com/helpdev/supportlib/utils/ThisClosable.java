@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.utils;
+package br.com.helpdev.supportlib.utils;
 
 import android.os.Build;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 import java.io.Closeable;
 
 /**
- * Created by demantoide on 16/02/16.
+ * Created by Guilherme Biff Zarelli on 16/02/16.
  */
 public final class ThisClosable {
     private ThisClosable() {
@@ -19,7 +19,7 @@ public final class ThisClosable {
     public static void close(Object closeable) {
         if (closeable != null) {
             try {
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     ((Closeable) closeable).close();
                 } else {
                     closeable.getClass().getMethod("close").invoke(closeable);

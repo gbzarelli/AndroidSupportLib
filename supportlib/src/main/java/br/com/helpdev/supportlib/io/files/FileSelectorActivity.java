@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.file_selector;
+package br.com.helpdev.supportlib.io.files;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import br.com.helpdev.supportlib.R;
-import br.com.helpdev.supportlib.file_selector.adapter.FileSelectorAdapter;
+import br.com.helpdev.supportlib.io.files.FileSelectorAdapter;
 
 /**
  * Intent intent = new Intent(MainActivity.this, FileSelectorActivity.class);

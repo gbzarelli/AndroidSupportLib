@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.file_selector.adapter;
+package br.com.helpdev.supportlib.io.files;
 
 import android.content.Context;
 import android.view.LayoutInflater;

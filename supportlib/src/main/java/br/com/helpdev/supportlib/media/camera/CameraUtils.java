@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media.camera;
+package br.com.helpdev.supportlib.media.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;

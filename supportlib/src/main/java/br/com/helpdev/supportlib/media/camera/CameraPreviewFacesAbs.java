@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media.camera;
+package br.com.helpdev.supportlib.media.camera;
 
 import android.app.Activity;
 import android.graphics.Canvas;
@@ -10,7 +10,7 @@ import android.hardware.Camera;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.grupocriar.swapandroid.ui.UnitUtils;
+import br.com.helpdev.supportlib.ui.UnitUtils;
 
 /**
  * Created by Guilherme Biff Zarelli on 12/5/17.

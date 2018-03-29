@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.ui.adapter;
+package br.com.helpdev.supportlib.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import br.com.grupocriar.swapandroid.ui.UnitUtils;
-import br.com.grupocriar.swapandroid.utils.ThisObjects;
+import br.com.helpdev.supportlib.ui.UnitUtils;
+import br.com.helpdev.supportlib.utils.ThisObjects;
 
 
 /**
- * Created by felipe on 11/05/16.
+ * Created by Felipe Barata on 11/05/16.
  */
 public abstract class RecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 

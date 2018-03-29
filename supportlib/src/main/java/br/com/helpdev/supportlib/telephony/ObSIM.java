@@ -1,7 +1,7 @@
-package br.com.grupocriar.swapandroid.telephony;
+package br.com.helpdev.supportlib.telephony;
 
 /**
- * Created by demantoide on 26/08/16.
+ * Created by Guilherme Biff Zarelli on 26/08/16.
  */
 public class ObSIM {
 

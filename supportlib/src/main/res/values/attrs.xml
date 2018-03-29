@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="textViewMyLayoutProgress" format="reference" />
+
+    <declare-styleable name="TextViewCompatTint">
+        <attr name="drawableTint" format="reference|color" />
+        <attr name="drawableTintMode" format="reference" />
+    </declare-styleable>
+
 </resources>

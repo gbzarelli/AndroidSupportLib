@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.receivers;
+package br.com.helpdev.supportlib.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

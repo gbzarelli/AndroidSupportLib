@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.files;
+package br.com.helpdev.supportlib.io.files;
 
 import android.content.Context;
 import android.os.Environment;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by demantoide on 10/07/15.
+ * Created by Guilherme Biff Zarelli on 10/07/15.
  */
 public class FileUtils {
 

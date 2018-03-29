@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.network;
+package br.com.helpdev.supportlib.io.network;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,10 +7,10 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import br.com.grupocriar.swapandroid.system.RuntimeAndroid;
+import br.com.helpdev.supportlib.system.RuntimeAndroid;
 
 /**
- * Created by demantoide on 17/03/16.
+ * Created by Guilherme Biff Zarelli on 17/03/16.
  */
 public final class NetworkUtils {
 

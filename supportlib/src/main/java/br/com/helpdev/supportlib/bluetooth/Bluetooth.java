@@ -1,7 +1,7 @@
-package br.com.grupocriar.swapandroid.bluetooth;
+package br.com.helpdev.supportlib.bluetooth;
 
 /**
- * Created by demantoide on 25/07/15.
+ * Created by Guilherme Biff Zarelli on 25/07/15.
  */
 
 import android.annotation.SuppressLint;

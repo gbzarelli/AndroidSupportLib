@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.pm;
+package br.com.helpdev.supportlib.pm;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by demantoide on 10/03/16.
+ * Created by Guilherme Biff Zarelli on 10/03/16.
  */
 public final class PackageUtils {
     private PackageUtils() {

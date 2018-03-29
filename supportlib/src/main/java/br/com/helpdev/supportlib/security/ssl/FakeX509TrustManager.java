@@ -1,10 +1,10 @@
-package br.com.grupocriar.swapandroid.security.ssl;
+package br.com.helpdev.supportlib.security.ssl;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 /**
- * Created by demantoide on 15/01/16.
+ * Created by Guilherme Biff Zarelli on 15/01/16.
  */
 public class FakeX509TrustManager implements
         javax.net.ssl.X509TrustManager {

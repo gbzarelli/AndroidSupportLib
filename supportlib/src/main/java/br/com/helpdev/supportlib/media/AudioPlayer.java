@@ -1,10 +1,10 @@
-package br.com.grupocriar.swapandroid.media;
+package br.com.helpdev.supportlib.media;
 
 import android.content.Context;
 import android.media.MediaPlayer;
 
 /**
- * Created by demantoide on 16/03/16.
+ * Created by Guilherme Biff Zarelli on 16/03/16.
  */
 public class AudioPlayer implements MediaPlayer.OnCompletionListener {
 

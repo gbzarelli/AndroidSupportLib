@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.ui.view;
+package br.com.helpdev.supportlib.ui.view;
 
 import android.app.Activity;
 import android.content.Context;

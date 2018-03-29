@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.ui.widget;
+package br.com.helpdev.supportlib.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
-import br.com.grupocriar.swapandroid.R;
+import br.com.helpdev.supportlib.R;
 
 
 /**

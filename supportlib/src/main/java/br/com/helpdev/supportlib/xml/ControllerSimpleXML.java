@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.xml;
+package br.com.helpdev.supportlib.xml;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;

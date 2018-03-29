@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.network.wifi;
+package br.com.helpdev.supportlib.io.network.wifi;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
  * <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
  * <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
- * Created by demantoide on 26/07/15.
+ * Created by Guilherme Biff Zarelli on 26/07/15.
  */
 public class Wifi {
     public static final String SECURITY_WEP = "WEP";

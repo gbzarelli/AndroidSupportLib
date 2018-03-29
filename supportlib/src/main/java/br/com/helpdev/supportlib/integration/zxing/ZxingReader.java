@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.integration.zxing;
+package br.com.helpdev.supportlib.integration.zxing;
 
 import android.app.Activity;
 import android.app.AlertDialog;

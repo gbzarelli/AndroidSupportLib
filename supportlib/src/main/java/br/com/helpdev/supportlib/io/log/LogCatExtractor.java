@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.log;
+package br.com.helpdev.supportlib.io.log;
 
 import android.os.Environment;
 import android.util.Log;
@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by demantoide on 03/02/16.
+ * Created by Guilherme Biff Zarelli on 03/02/16.
  */
 public class LogCatExtractor {
     private static final String LOG = "LogCatExtractor";
