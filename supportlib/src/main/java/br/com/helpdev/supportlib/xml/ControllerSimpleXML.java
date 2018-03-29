@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.xml;
+package br.com.grupocriar.swapandroid.xml;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -14,6 +14,7 @@ public class ControllerSimpleXML {
         throw new RuntimeException("No ControllerSimpleXML");
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T xmlToObject(Class tClass, String xml) throws Exception {
         Serializer serializer = new Persister();
         return (T) serializer.read(tClass, xml);

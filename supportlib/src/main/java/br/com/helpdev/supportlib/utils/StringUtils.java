@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.utils;
+package br.com.grupocriar.swapandroid.utils;
 
 import android.text.TextUtils;
 
@@ -11,9 +11,10 @@ public class StringUtils {
     private StringUtils() {
         throw new RuntimeException("No StringUtils!");
     }
+
     public static String removeAccentuation(String texto) {
-        if(TextUtils.isEmpty(texto)) {
-           return "";
+        if (TextUtils.isEmpty(texto)) {
+            return "";
         }
         return Normalizer.normalize(new StringBuilder(texto), Normalizer.Form.NFKD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
@@ -37,5 +38,15 @@ public class StringUtils {
             );
         }
         return cpf;
+    }
+
+    public static String formatPlaca(String placa) {
+        if (placa.length() == 7) {
+            placa = String.format("%s-%s",
+                    placa.substring(0, 3),
+                    placa.substring(3, 7)
+            );
+        }
+        return placa;
     }
 }

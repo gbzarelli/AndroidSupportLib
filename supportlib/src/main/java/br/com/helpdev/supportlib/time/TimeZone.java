@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.time;
+package br.com.grupocriar.swapandroid.time;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,6 +9,9 @@ import java.util.Locale;
  */
 
 public class TimeZone {
+    private TimeZone() {
+        throw new RuntimeException("No TimeZone!");
+    }
 
     /**
      * TimeZone formato : '-03:00'
@@ -17,7 +20,7 @@ public class TimeZone {
      */
     public static String getTimeZoneDifGMT() {
         Calendar calendar = Calendar.getInstance(java.util.TimeZone.getTimeZone("GMT"), Locale.getDefault());
-        String timeZone = new SimpleDateFormat("Z").format(calendar.getTime());
+        String timeZone = new SimpleDateFormat("Z", Locale.getDefault()).format(calendar.getTime());
         return timeZone.substring(0, 3) + ":" + timeZone.substring(3, 5);
     }
 
@@ -63,7 +66,7 @@ public class TimeZone {
             case "RJ":
             case "ES":
             case "PR":
-                return tz.contains("brasilia") || tz.contains("sao_paulo");
+                return tz.contains("brasilia") || tz.contains("sao_paulo") || tz.contains("brasília") || tz.contains("são_paulo") || tz.contains("são paulo");
         }
         return false;
     }

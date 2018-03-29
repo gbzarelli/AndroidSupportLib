@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.time;
+package br.com.grupocriar.swapandroid.time;
 
 import android.app.Service;
 import android.content.Intent;

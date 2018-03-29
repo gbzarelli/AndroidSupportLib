@@ -1,4 +1,5 @@
-package br.com.helpdev.supportlib.utils;
+package br.com.grupocriar.swapandroid.utils;
+
 import android.os.Build;
 import android.util.Log;
 
@@ -11,28 +12,29 @@ public final class ThisClosable {
     private ThisClosable() {
         throw new RuntimeException("No ThisClosable!");
     }
+
     private static final String LOG = "ThisClosable";
 
 
-    public static void fecha(Object closeable) {
+    public static void close(Object closeable) {
         if (closeable != null) {
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     ((Closeable) closeable).close();
                 } else {
                     closeable.getClass().getMethod("close").invoke(closeable);
                 }
             } catch (Throwable e) {
-                Log.e(LOG, "fecha(Closeable closeable)", e);
+                Log.e(LOG, "close(Closeable closeable)", e);
             }
         }
     }
 
-    public static void fecha(Object closeable, Object... closeables) {
-        fecha(closeable);
+    public static void close(Object closeable, Object... closeables) {
+        close(closeable);
         if (closeables != null) {
             for (Object closeable1 : closeables) {
-                fecha(closeable1);
+                close(closeable1);
             }
         }
     }
