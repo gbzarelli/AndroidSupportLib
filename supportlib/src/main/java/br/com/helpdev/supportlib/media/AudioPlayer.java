@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media;
+package br.com.helpdev.supportlib.media;
 
 import android.content.Context;
 import android.media.MediaPlayer;

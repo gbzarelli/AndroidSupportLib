@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.network.wifi;
+package br.com.helpdev.supportlib.io.network.wifi;
 
 /**
  * Created by Guilherme Biff Zarelli on 29/09/15.
@@ -13,6 +13,8 @@ import android.support.annotation.IntDef;
 import android.support.annotation.RequiresPermission;
 import android.util.Log;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Method;
 
 /**
@@ -32,6 +34,7 @@ public class WifiAP {
      * WIFI_AP_STATE_FAILED = (Integer) WifiManager.class.getDeclaredField("WIFI_AP_STATE_FAILED").get(Integer.class);
      * WIFI_AP_STATE_DISABLING = (Integer) WifiManager.class.getDeclaredField("WIFI_AP_STATE_DISABLING").get(Integer.class);
      */
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({WIFI_AP_STATE_DISABLED, WIFI_AP_STATE_ENABLING, WIFI_AP_STATE_ENABLED, WIFI_AP_STATE_FAILED, WIFI_AP_STATE_DISABLING})
     @interface WifiAPState {
     }

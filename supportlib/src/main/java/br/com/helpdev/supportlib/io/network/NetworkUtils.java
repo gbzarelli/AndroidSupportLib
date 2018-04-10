@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.network;
+package br.com.helpdev.supportlib.io.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,7 +8,11 @@ import android.support.annotation.StringDef;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import br.com.grupocriar.swapandroid.system.RuntimeAndroid;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import br.com.helpdev.supportlib.system.RuntimeAndroid;
+
 
 /**
  * Created by Guilherme Biff Zarelli on 17/03/16.
@@ -63,6 +67,7 @@ public final class NetworkUtils {
         return getMobileNetworkType(networkType);
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     @StringDef({MOBILE_NETWORK_2G, MOBILE_NETWORK_3G, MOBILE_NETWORK_4G, MOBILE_NETWORK_UNKNOWN})
     @interface MobileNetworkType {
     }
@@ -76,8 +81,8 @@ public final class NetworkUtils {
      * @param networkType
      * @return MOBILE_NETWORK_2G or MOBILE_NETWORK_3G or MOBILE_NETWORK_4G
      */
-    public static @MobileNetworkType
-    String getMobileNetworkType(int networkType) {
+    @MobileNetworkType
+    public static String getMobileNetworkType(int networkType) {
         switch (networkType) {
             case TelephonyManager.NETWORK_TYPE_GPRS:
             case TelephonyManager.NETWORK_TYPE_EDGE:

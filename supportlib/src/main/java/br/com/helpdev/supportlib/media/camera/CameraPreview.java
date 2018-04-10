@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media.camera;
+package br.com.helpdev.supportlib.media.camera;
 
 import android.app.Activity;
 import android.graphics.Rect;
@@ -11,6 +11,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by Felipe Barata on 18/08/16.
@@ -19,7 +21,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     public static final int CAMERA_FACING_BACK = 0;
     public static final int CAMERA_FACING_FRONT = 1;
-
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({CAMERA_FACING_BACK, CAMERA_FACING_FRONT})
     @interface CameraInfo {
     }
@@ -178,10 +180,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void setCameraDisplayOrientation() {
-        android.hardware.Camera.CameraInfo info =
-                new android.hardware.Camera.CameraInfo();
+        Camera.CameraInfo info =
+                new Camera.CameraInfo();
 
-        android.hardware.Camera.getCameraInfo(cameraToUse, info);
+        Camera.getCameraInfo(cameraToUse, info);
         int rotation = activity.getWindowManager().getDefaultDisplay()
                 .getRotation();
         int degrees = 0;

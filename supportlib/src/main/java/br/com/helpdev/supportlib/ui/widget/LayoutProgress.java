@@ -1,11 +1,10 @@
-package br.com.grupocriar.swapandroid.ui.widget;
+package br.com.helpdev.supportlib.ui.widget;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.MainThread;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
-import br.com.grupocriar.swapandroid.R;
+import br.com.helpdev.supportlib.R;
 
 
 /**

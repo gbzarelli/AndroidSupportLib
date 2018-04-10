@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.telephony;
+package br.com.helpdev.supportlib.telephony;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -10,8 +10,7 @@ import android.net.Uri;
 import android.support.annotation.RequiresPermission;
 
 import java.util.List;
-
-import br.com.grupocriar.swapandroid.R;
+import br.com.helpdev.supportlib.R;
 
 /**
  * Created by Guilherme Biff Zarelli on 08/07/15.

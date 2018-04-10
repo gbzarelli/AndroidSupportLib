@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.bluetooth;
+package br.com.helpdev.supportlib.bluetooth;
 
 /**
  * Created by Guilherme Biff Zarelli on 25/07/15.

@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.ui.adapter;
+package br.com.helpdev.supportlib.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import br.com.grupocriar.swapandroid.ui.UnitUtils;
-import br.com.grupocriar.swapandroid.utils.ThisObjects;
+import br.com.helpdev.supportlib.ui.UnitUtils;
+import br.com.helpdev.supportlib.utils.ThisObjects;
 
 
 /**

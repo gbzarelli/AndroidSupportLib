@@ -1,6 +1,5 @@
-package br.com.grupocriar.swapandroid.gps;
+package br.com.helpdev.supportlib.gps;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -64,7 +63,7 @@ public class Gps implements LocationListener {
 
 
     @Override
-    public void onLocationChanged(android.location.Location location) {
+    public void onLocationChanged(Location location) {
         if (LocationManager.GPS_PROVIDER.equals(location.getProvider())) {
             this.locationGPS = location;
         } else if (LocationManager.NETWORK_PROVIDER.equals(location.getProvider())) {
@@ -102,11 +101,11 @@ public class Gps implements LocationListener {
         return views;
     }
 
-    public android.location.Location getLocationGPS() {
+    public Location getLocationGPS() {
         return getLocationGPS(10_000, 10_000);
     }
 
-    public android.location.Location getLocationGPS(long outdateGPSMillis, long outdateNetworkMillis) {
+    public Location getLocationGPS(long outdateGPSMillis, long outdateNetworkMillis) {
         views++;
 
         //Network esta desatualizado!.

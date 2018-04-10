@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media;
+package br.com.helpdev.supportlib.media;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

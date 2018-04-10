@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.image;
+package br.com.helpdev.supportlib.io.image;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

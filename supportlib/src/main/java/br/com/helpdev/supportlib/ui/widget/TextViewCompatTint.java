@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.ui.widget;
+package br.com.helpdev.supportlib.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,12 +8,12 @@ import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
-import br.com.grupocriar.swapandroid.R;
+import br.com.helpdev.supportlib.R;
 
 
 /**
  * @author : Pedramrn@gmail.com
- *         Created on: 2017-04-27
+ * Created on: 2017-04-27
  */
 
 public class TextViewCompatTint extends AppCompatTextView {

@@ -1,6 +1,5 @@
-package br.com.grupocriar.swapandroid.system;
+package br.com.helpdev.supportlib.system;
 
-import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.BitmapFactory;

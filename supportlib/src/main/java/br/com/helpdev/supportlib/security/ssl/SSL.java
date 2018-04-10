@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.security.ssl;
+package br.com.helpdev.supportlib.security.ssl;
 
 import android.util.Log;
 
@@ -29,7 +29,7 @@ public class SSL {
 
         javax.net.ssl.SSLContext context = null;
 
-        TrustManager[] trustManagers = new javax.net.ssl.TrustManager[]{new FakeX509TrustManager()};
+        TrustManager[] trustManagers = new TrustManager[]{new FakeX509TrustManager()};
 
         try {
             context = javax.net.ssl.SSLContext.getInstance("TLS");

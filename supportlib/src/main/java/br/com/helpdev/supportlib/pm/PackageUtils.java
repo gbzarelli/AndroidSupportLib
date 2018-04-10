@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.pm;
+package br.com.helpdev.supportlib.pm;
 
 import android.app.Activity;
 import android.app.ActivityManager;

@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.telephony;
+package br.com.helpdev.supportlib.telephony;
 
 /**
  * Created by Guilherme Biff Zarelli on 08/07/15.

@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.system;
+package br.com.helpdev.supportlib.system;
 
 /**
  * Created by Guilherme Biff Zarelli on 3/27/18.

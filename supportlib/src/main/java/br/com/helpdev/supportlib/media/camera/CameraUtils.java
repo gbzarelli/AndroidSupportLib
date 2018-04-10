@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.media.camera;
+package br.com.helpdev.supportlib.media.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -9,6 +9,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Date;
 
 /**
@@ -20,6 +22,7 @@ public class CameraUtils {
     public static final String MEDIA_JPEG = ".jpeg";
     public static final String MEDIA_MP4 = ".mp4";
 
+    @Retention(RetentionPolicy.SOURCE)
     @StringDef({MEDIA_JPEG, MEDIA_MP4})
     @interface MediaType {
     }

@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.security.ssl;
+package br.com.helpdev.supportlib.security.ssl;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

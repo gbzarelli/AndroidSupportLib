@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.network;
+package br.com.helpdev.supportlib.io.network;
 
 import android.util.Log;
 

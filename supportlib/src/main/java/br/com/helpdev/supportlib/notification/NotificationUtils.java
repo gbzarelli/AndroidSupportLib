@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.notification;
+package br.com.helpdev.supportlib.notification;
 
 import android.app.Notification;
 import android.app.PendingIntent;

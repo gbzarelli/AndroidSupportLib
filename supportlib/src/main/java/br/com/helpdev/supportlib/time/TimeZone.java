@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.time;
+package br.com.helpdev.supportlib.time;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.files;
+package br.com.helpdev.supportlib.io.files;
 
 import android.content.Context;
 import android.os.Environment;

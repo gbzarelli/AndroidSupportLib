@@ -1,4 +1,4 @@
-package br.com.grupocriar.swapandroid.io.network.wifi;
+package br.com.helpdev.supportlib.io.network.wifi;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -13,6 +13,8 @@ import android.support.annotation.StringDef;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
  */
 public class Wifi {
 
+    @Retention(RetentionPolicy.SOURCE)
     @StringDef({SECURITY_WEP, SECURITY_WPA, SECURITY_OPEN})
     @interface WifiSecurity {
     }
