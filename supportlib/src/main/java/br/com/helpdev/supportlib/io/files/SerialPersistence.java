@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.io.files;
+package br.com.grupocriar.swapandroid.io.files;
 
 import android.util.Log;
 
@@ -63,19 +63,18 @@ public class SerialPersistence<T> {
             return false;
         }
         File file = getFileWrite();
-        FileOutputStream fos = new FileOutputStream(file);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(objeto);
-        oos.close();
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(objeto);
+        }
 
 
         File bkp = new File(this.path, name + FILE_EXT_BKP);
         if (!bkp.exists()) {
             Log.d(LOG, "GRAVANDO ARQUIVO DE BKP");
-            fos = new FileOutputStream(bkp);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(objeto);
-            oos.close();
+            try (FileOutputStream fos = new FileOutputStream(bkp); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(objeto);
+            }
         }
 
         return true;

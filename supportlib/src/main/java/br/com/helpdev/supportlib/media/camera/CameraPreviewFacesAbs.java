@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.media.camera;
+package br.com.grupocriar.swapandroid.media.camera;
 
 import android.app.Activity;
 import android.graphics.Canvas;
@@ -10,7 +10,7 @@ import android.hardware.Camera;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.helpdev.supportlib.ui.UnitUtils;
+import br.com.grupocriar.swapandroid.ui.UnitUtils;
 
 /**
  * Created by Guilherme Biff Zarelli on 12/5/17.
@@ -20,7 +20,6 @@ public abstract class CameraPreviewFacesAbs extends CameraPreview {
 
     private int facesDetectadas;
 
-
     private Paint paintText, paintRect;
     private boolean drawRectFace;
     private boolean faceDetectOperacional;
@@ -29,11 +28,11 @@ public abstract class CameraPreviewFacesAbs extends CameraPreview {
     private boolean drawTextFacesDetects;
     private List<Rect> rects = new ArrayList<>();
 
-    public CameraPreviewFacesAbs(Activity activity, int cameraToUse, boolean drawRectFace) {
+    public CameraPreviewFacesAbs(Activity activity, @CameraInfo int cameraToUse, boolean drawRectFace) {
         this(activity, cameraToUse, drawRectFace, DELAY_PREVIEW_PROCESS_DEFAULT);
     }
 
-    public CameraPreviewFacesAbs(Activity activity, int cameraToUse, boolean drawRectFace, int delayPreviewProcess) {
+    public CameraPreviewFacesAbs(Activity activity, @CameraInfo int cameraToUse, boolean drawRectFace, int delayPreviewProcess) {
         super(activity, cameraToUse, delayPreviewProcess);
         this.drawRectFace = drawRectFace;
         drawTextFacesDetects = true;
@@ -154,10 +153,8 @@ public abstract class CameraPreviewFacesAbs extends CameraPreview {
     public Rect newRect(Camera.Face face) {
         double viewWidth = getWidth();
         double viewHeight = getHeight();
-        double imageWidth = previewSizeWidth;
-        double imageHeight = previewSizeHeight;
 
-        double scale = Math.min(viewWidth / imageWidth, viewHeight / imageHeight);
+        double scale = Math.min(viewWidth / (double) previewSizeWidth, viewHeight / (double) previewSizeHeight);
 
         return new Rect(
                 (int) ((viewWidth - face.rect.left) * scale),//invertendo horizontalmente (sem inverter tirar 'viewWidth-')

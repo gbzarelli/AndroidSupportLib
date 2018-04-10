@@ -1,13 +1,16 @@
-package br.com.helpdev.supportlib.io.network.wifi;
+package br.com.grupocriar.swapandroid.io.network.wifi;
 
 /**
  * Created by Guilherme Biff Zarelli on 29/09/15.
  */
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.support.annotation.IntDef;
+import android.support.annotation.RequiresPermission;
 import android.util.Log;
 
 import java.lang.reflect.Method;
@@ -29,6 +32,10 @@ public class WifiAP {
      * WIFI_AP_STATE_FAILED = (Integer) WifiManager.class.getDeclaredField("WIFI_AP_STATE_FAILED").get(Integer.class);
      * WIFI_AP_STATE_DISABLING = (Integer) WifiManager.class.getDeclaredField("WIFI_AP_STATE_DISABLING").get(Integer.class);
      */
+    @IntDef({WIFI_AP_STATE_DISABLED, WIFI_AP_STATE_ENABLING, WIFI_AP_STATE_ENABLED, WIFI_AP_STATE_FAILED, WIFI_AP_STATE_DISABLING})
+    @interface WifiAPState {
+    }
+
     public static final int WIFI_AP_STATE_DISABLED = 11;
     public static final int WIFI_AP_STATE_ENABLING = 12;
     public static final int WIFI_AP_STATE_ENABLED = 13;
@@ -46,11 +53,11 @@ public class WifiAP {
     }
 
     public static WifiManager getWifiManager(Context context) {
-        return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
     public static WifiConfiguration getWifiAPConfiguration(WifiManager wifi_manager) throws Exception {
-        Method wifiApConfigurationMethod = wifi_manager.getClass().getMethod("getWifiAPConfiguration");
+        Method wifiApConfigurationMethod = wifi_manager.getClass().getMethod("getWifiApConfiguration");
         return (WifiConfiguration) wifiApConfigurationMethod.invoke(wifi_manager);
     }
 
@@ -80,7 +87,7 @@ public class WifiAP {
      * @param enable            habilitar ou nao o hotspot/wifi ap
      * @throws Exception
      */
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.CHANGE_WIFI_STATE})
     public static void setWifiAPEnable(WifiManager wifi_manager, WifiConfiguration wifiConfiguration, boolean enable) throws Exception {
         wifi_manager.setWifiEnabled(false);
 
@@ -95,16 +102,20 @@ public class WifiAP {
     }
 
     /**
-     * @return Retorna o status do wifi ap.
+     * @param wifi_manager
+     * @return
      * @throws Exception
      */
-    public static int getWifiAPState(WifiManager wifi_manager) throws Exception {
-        Method wifiApState = wifi_manager.getClass().getMethod("getWifiAPState");
+    public static @WifiAPState
+    int getWifiAPState(WifiManager wifi_manager) throws Exception {
+        Method wifiApState = wifi_manager.getClass().getMethod("getWifiApState");
         return (Integer) wifiApState.invoke(wifi_manager);
     }
 
+    @RequiresPermission(anyOf = {Manifest.permission.CHANGE_WIFI_STATE})
     public static void connectAPAsync(final WifiManager wifiManager, final String ssid, final String pass) {
         new Thread("connectAPAsync") {
+            @SuppressLint("MissingPermission")
             @Override
             public void run() {
                 try {
@@ -116,6 +127,7 @@ public class WifiAP {
         }.start();
     }
 
+    @RequiresPermission(anyOf = {Manifest.permission.CHANGE_WIFI_STATE})
     public static void connectAP(WifiManager wifiManager, final String ssid, final String pass) throws Exception {
         WifiConfiguration wc = new WifiConfiguration();
         wc.SSID = ssid;
@@ -140,7 +152,7 @@ public class WifiAP {
         setWifiAPEnable(wifiManager, wc, true);
     }
 
-
+    @RequiresPermission(anyOf = {Manifest.permission.CHANGE_WIFI_STATE})
     public static void shutdownAP(WifiManager wifiManager) throws Exception {
         setWifiAPEnable(wifiManager, null, false);
     }

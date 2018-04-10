@@ -1,5 +1,5 @@
 
-package br.com.helpdev.supportlib.security;
+package br.com.grupocriar.swapandroid.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.system;
+package br.com.grupocriar.swapandroid.system;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -16,9 +16,9 @@ public class RuntimeAndroid {
         throw new RuntimeException("No RuntimeAndroid!");
     }
 
-    public static Process getProcess(String comando) throws IOException {
+    public static Process getProcess(String command) throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(comando);
+        return runtime.exec(command);
     }
 
     public static void backToMain(Context context, Bundle params, Class mainClass) {
@@ -33,6 +33,9 @@ public class RuntimeAndroid {
 
         PendingIntent mPendingIntent = PendingIntent.getActivity(context, 5_000, mStartActivity, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (null == mgr) {
+            throw new RuntimeException("No AlarmManager system");
+        }
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + delay, mPendingIntent);
 
         killApp();

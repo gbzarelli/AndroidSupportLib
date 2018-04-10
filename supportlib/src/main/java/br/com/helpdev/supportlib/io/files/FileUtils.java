@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.io.files;
+package br.com.grupocriar.swapandroid.io.files;
 
 import android.content.Context;
 import android.os.Environment;
@@ -58,8 +58,7 @@ public class FileUtils {
 
     public static String encodeFileToBase64Binary(byte[] bytes) {
         byte[] encoded = android.util.Base64.encode(bytes, 0);
-        String encodedString = new String(encoded);
-        return encodedString;
+        return new String(encoded);
     }
 
     public static String encodeFileToBase64Binary(File file)
@@ -76,35 +75,29 @@ public class FileUtils {
         if (!fileWrite.exists()) {
             fileWrite.createNewFile();
         }
-        FileOutputStream fos = new FileOutputStream(fileWrite);
-        fos.write(data);
-        fos.flush();
-        try {
-            fos.close();
-        } catch (Throwable t) {
+        try (FileOutputStream fos = new FileOutputStream(fileWrite)) {
+            fos.write(data);
+            fos.flush();
         }
     }
 
     public static byte[] loadFile(File file) throws IOException {
         byte[] bytes;
-        InputStream is = new FileInputStream(file);
-        long length = file.length();
-        if (length > Integer.MAX_VALUE) {
-            throw new IOException("File to large " + file.getName());
-        }
-        bytes = new byte[(int) length];
-        int offset = 0;
-        int numRead = 0;
-        while (offset < bytes.length
-                && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-            offset += numRead;
-        }
-        if (offset < bytes.length) {
-            throw new IOException("Could not completely read file " + file.getName());
-        }
-        try {
-            is.close();
-        } catch (Throwable t) {
+        try (InputStream is = new FileInputStream(file)) {
+            long length = file.length();
+            if (length > Integer.MAX_VALUE) {
+                throw new IOException("File to large " + file.getName());
+            }
+            bytes = new byte[(int) length];
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length
+                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+            if (offset < bytes.length) {
+                throw new IOException("Could not completely read file " + file.getName());
+            }
         }
         return bytes;
     }

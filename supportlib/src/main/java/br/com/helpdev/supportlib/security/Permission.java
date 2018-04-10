@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.security;
+package br.com.grupocriar.swapandroid.security;
 
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -26,7 +26,6 @@ public class Permission {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String perm : permissions) {
                 if (activity.checkSelfPermission(perm) != PackageManager.PERMISSION_GRANTED) {
-                    System.out.println("NO PERMISSION TO: " + perm);
                     return false;
                 }
             }
@@ -37,7 +36,6 @@ public class Permission {
     public boolean verifyAndRequestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!verifyPermissions()) {
-                System.out.println("CALL REQUEST PERMISSIONS: " + Arrays.toString(permissions));
                 ActivityCompat.requestPermissions(activity, permissions, REQUEST_PERMISSIONS);
                 return false;
             }
@@ -48,8 +46,6 @@ public class Permission {
     public boolean onForceRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSIONS) {
             for (int permissionResult : grantResults) {
-                System.out.println("PERMISSIONS: " + permissions);
-                System.out.println("GRANT_RESULT: " + grantResults);
                 if (permissionResult != PackageManager.PERMISSION_GRANTED) {
                     verifyAndRequestPermissions();
                     return false;

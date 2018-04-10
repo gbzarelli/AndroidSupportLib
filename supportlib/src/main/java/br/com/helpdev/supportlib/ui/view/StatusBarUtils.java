@@ -1,31 +1,37 @@
-package br.com.helpdev.supportlib.ui.view;
+package br.com.grupocriar.swapandroid.ui.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.support.annotation.RequiresPermission;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 /**
- * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
- * Created by gbzarelli on 1/29/18.
+ * Created by Guilherme Biff Zarelli on 1/29/18.
  */
 public class StatusBarUtils {
 
+    @RequiresPermission(Manifest.permission.SYSTEM_ALERT_WINDOW)
     public static void removeViewGroup(Activity activity, ViewGroup viewGroup) {
         WindowManager manager = (WindowManager) activity.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        if (null == manager) throw new RuntimeException("No WindowManager service");
         manager.removeView(viewGroup);
     }
 
+    @RequiresPermission(Manifest.permission.SYSTEM_ALERT_WINDOW)
     public static ViewGroup preventStatusBarExpansion(Activity activity) {
         return preventStatusBarExpansion(activity, new DefaultCustomView(activity));
     }
 
+    @RequiresPermission(Manifest.permission.SYSTEM_ALERT_WINDOW)
     public static ViewGroup preventStatusBarExpansion(Activity activity, ViewGroup viewGroup) {
         WindowManager manager = ((WindowManager) activity.getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE));
+        if (null == manager) throw new RuntimeException("No WindowManager service");
 
         WindowManager.LayoutParams localLayoutParams = new WindowManager.LayoutParams();
         localLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;

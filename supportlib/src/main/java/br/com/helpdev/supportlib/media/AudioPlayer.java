@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.media;
+package br.com.grupocriar.swapandroid.media;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -13,7 +13,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
     private MediaPlayer mediaPlayer;
 
     private AudioPlayer() {
-
+        throw new RuntimeException("No AudioPlayer!");
     }
 
     public static AudioPlayer getInstance() {
@@ -24,7 +24,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener {
     }
 
     public void play(Context context, int audioResId) {
-        if (mediaPlayer==null || !mediaPlayer.isPlaying()) {
+        if (mediaPlayer == null || !mediaPlayer.isPlaying()) {
             mediaPlayer = MediaPlayer.create(context, audioResId);
             mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.start();

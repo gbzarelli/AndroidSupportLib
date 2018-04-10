@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.io.image;
+package br.com.grupocriar.swapandroid.io.image;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -46,18 +46,17 @@ public class ImageUtils {
             quality = 100;
         }
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
-        byte[] imagemScalada = baos.toByteArray();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+            byte[] imagemScalada = baos.toByteArray();
 
-        if (overwrite) {
-            try (FileOutputStream fos = new FileOutputStream(new File(uri.getPath()), false)) {
-                fos.write(imagemScalada, 0, imagemScalada.length);
-                fos.flush();
+            if (overwrite) {
+                try (FileOutputStream fos = new FileOutputStream(new File(uri.getPath()), false)) {
+                    fos.write(imagemScalada, 0, imagemScalada.length);
+                    fos.flush();
+                }
             }
+            return imagemScalada;
         }
-
-        return imagemScalada;
-
     }
 }

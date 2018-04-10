@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.notification;
+package br.com.grupocriar.swapandroid.notification;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -16,17 +16,29 @@ public class NotificationUtils {
 
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
     public static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
-
+    public static final String DEFAULT_CHANNEL_ID = "NotificationUtils.DEFAULT_CHANNEL_ID";
 
     private NotificationUtils() {
         throw new RuntimeException("No NotificationUtils!");
     }
 
-    public static NotificationCompat.Builder createNotification(Context context, String title, String mensage, PendingIntent pi) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+    public static NotificationCompat.Builder createNotification(Context context,
+                                                                String title,
+                                                                String message,
+                                                                PendingIntent pi) {
+        return createNotification(context, DEFAULT_CHANNEL_ID, title, message, pi);
+    }
+
+    public static NotificationCompat.Builder createNotification(Context context,
+                                                                String channelId,
+                                                                String title,
+                                                                String message,
+                                                                PendingIntent pi) {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId);
         builder.setDefaults(Notification.DEFAULT_ALL);
         builder.setContentTitle(title);
-        builder.setContentText(mensage);
+        builder.setContentText(message);
         builder.setContentIntent(pi);
         return builder;
     }
@@ -55,8 +67,8 @@ public class NotificationUtils {
                 ENABLED_NOTIFICATION_LISTENERS);
         if (!TextUtils.isEmpty(flat)) {
             final String[] names = flat.split(":");
-            for (int i = 0; i < names.length; i++) {
-                final ComponentName cn = ComponentName.unflattenFromString(names[i]);
+            for (String name : names) {
+                final ComponentName cn = ComponentName.unflattenFromString(name);
                 if (cn != null) {
                     if (TextUtils.equals(pkgName, cn.getPackageName())) {
                         return true;

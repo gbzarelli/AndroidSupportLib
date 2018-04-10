@@ -11,7 +11,7 @@
 // WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 // ACTION_ATIVACAO OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION_ATIVACAO, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-package br.com.helpdev.supportlib.security;
+package br.com.grupocriar.swapandroid.security;
 
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;

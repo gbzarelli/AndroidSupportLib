@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.gps;
+package br.com.grupocriar.swapandroid.gps;
 
 /**
  * Created by Guilherme Biff Zarelli on 15/03/16.

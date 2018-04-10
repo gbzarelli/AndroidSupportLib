@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.gps;
+package br.com.grupocriar.swapandroid.gps;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,8 +6,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.RequiresPermission;
 
 import java.util.HashMap;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 /**
  * Permissions <uses-permission
@@ -22,7 +26,7 @@ public class Gps implements LocationListener {
     private HashMap<String, GPSProvider> providers;
     private LocationManager locationManager;
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public Gps(Context context) {
         views = -1;
         locationGPS = null;
@@ -41,7 +45,7 @@ public class Gps implements LocationListener {
         }
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION})
     public void close() {
         locationManager.removeUpdates(this);
     }
@@ -60,7 +64,7 @@ public class Gps implements LocationListener {
 
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(android.location.Location location) {
         if (LocationManager.GPS_PROVIDER.equals(location.getProvider())) {
             this.locationGPS = location;
         } else if (LocationManager.NETWORK_PROVIDER.equals(location.getProvider())) {
@@ -98,11 +102,11 @@ public class Gps implements LocationListener {
         return views;
     }
 
-    public Location getLocationGPS() {
+    public android.location.Location getLocationGPS() {
         return getLocationGPS(10_000, 10_000);
     }
 
-    public Location getLocationGPS(long outdateGPSMillis, long outdateNetworkMillis) {
+    public android.location.Location getLocationGPS(long outdateGPSMillis, long outdateNetworkMillis) {
         views++;
 
         //Network esta desatualizado!.

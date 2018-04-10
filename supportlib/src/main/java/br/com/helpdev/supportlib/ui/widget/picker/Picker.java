@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.ui.widget.picker;
+package br.com.grupocriar.swapandroid.ui.widget.picker;
 
 
 import android.support.v4.app.FragmentManager;

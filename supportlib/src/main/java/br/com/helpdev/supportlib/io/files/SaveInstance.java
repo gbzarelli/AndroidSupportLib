@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.io.files;
+package br.com.grupocriar.swapandroid.io.files;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class SaveInstance {
     private static final String LOG = "SaveInstance";
 
-    public SaveInstance() {
+    private SaveInstance() {
         throw new RuntimeException("No SaveInstance!");
     }
 

@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.io.install;
+package br.com.grupocriar.swapandroid.io.install;
 
 import android.content.Context;
 import android.content.Intent;

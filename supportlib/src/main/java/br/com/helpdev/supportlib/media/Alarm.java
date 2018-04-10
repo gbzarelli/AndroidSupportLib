@@ -1,5 +1,6 @@
-package br.com.helpdev.supportlib.media;
+package br.com.grupocriar.swapandroid.media;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
@@ -8,6 +9,7 @@ import android.media.RingtoneManager;
 import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Vibrator;
+import android.support.annotation.RequiresPermission;
 
 /**
  * Created by Guilherme Biff Zarelli on 06/07/16.
@@ -16,25 +18,26 @@ public class Alarm {
 
     private static volatile boolean threadReproduzindo;
 
+    @RequiresPermission(Manifest.permission.VIBRATE)
     public static void playAlarm(final Context context, final int timeMillis) {
         if (threadReproduzindo) return;
         threadReproduzindo = true;
-        new Thread(new Runnable() {
+        new Thread("Vibrator") {
             @SuppressLint("MissingPermission")
             @Override
             public void run() {
                 Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(timeMillis);
+                if (null != vibrator) vibrator.vibrate(timeMillis);
             }
-        }).start();
-        new Thread(new Runnable() {
+        }.start();
+        new Thread("ToneGenerator") {
             @Override
             public void run() {
                 ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
                 tg.startTone(ToneGenerator.TONE_SUP_ERROR, timeMillis);
             }
-        }).start();
-        new Thread(new Runnable() {
+        }.start();
+        new Thread("LoopPlayAlarm") {
             @Override
             public void run() {
                 try {
@@ -43,7 +46,7 @@ public class Alarm {
                 } catch (Throwable e) {
                 }
             }
-        }).start();
+        }.start();
     }
 
     @Deprecated

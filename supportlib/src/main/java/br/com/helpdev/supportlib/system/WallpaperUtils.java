@@ -1,9 +1,10 @@
-package br.com.helpdev.supportlib.system;
+package br.com.grupocriar.swapandroid.system;
 
 import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.support.annotation.RequiresPermission;
 
 import java.io.IOException;
 
@@ -15,14 +16,10 @@ public class WallpaperUtils {
         throw new RuntimeException("No WallpaperUtils!");
     }
 
-    @SuppressLint("MissingPermission")
-    public static void setWallpaperDrawable(Context context, int resIdDrawable) {
+    @RequiresPermission(android.Manifest.permission.SET_WALLPAPER)
+    public static void setWallpaperDrawable(Context context, int resIdDrawable) throws IOException {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
-        try {
-            wallpaperManager.setBitmap(BitmapFactory.decodeResource(context.getResources(), resIdDrawable));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        wallpaperManager.setBitmap(BitmapFactory.decodeResource(context.getResources(), resIdDrawable));
     }
 
 }

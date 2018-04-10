@@ -1,9 +1,10 @@
-package br.com.helpdev.supportlib.media.camera;
+package br.com.grupocriar.swapandroid.media.camera;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.os.Environment;
+import android.support.annotation.StringDef;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -11,27 +12,29 @@ import java.io.File;
 import java.util.Date;
 
 /**
- * Created by felipe on 17/08/16.
+ * Created by Felipe Barata on 17/08/16.
  */
 public class CameraUtils {
 
-    public static final int MEDIA_PHOTO = 0;
-    public static final int MEDIA_VIDEO = 1;
 
-    private static final String[] EXTENSIONS = new String[]{".jpeg", ".mp4"};
+    public static final String MEDIA_JPEG = ".jpeg";
+    public static final String MEDIA_MP4 = ".mp4";
 
+    @StringDef({MEDIA_JPEG, MEDIA_MP4})
+    @interface MediaType {
+    }
 
     private CameraUtils() {
         throw new RuntimeException("No CameraUtils!");
     }
 
-    public static File newMedia(int tipo, String folderInMidia) {
+    public static File newMedia(@MediaType String type, String folderInMidia) {
         String mediaName = DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString();
         File dirMedia = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), folderInMidia);
         if (!dirMedia.exists()) {
             dirMedia.mkdirs();
         }
-        return new File(dirMedia, mediaName + EXTENSIONS[tipo]);
+        return new File(dirMedia, mediaName + type);
     }
 
     public static Bitmap rotate(Bitmap bitmap, String path) {

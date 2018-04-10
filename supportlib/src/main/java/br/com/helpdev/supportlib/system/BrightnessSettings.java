@@ -1,7 +1,7 @@
-package br.com.helpdev.supportlib.system;
+package br.com.grupocriar.swapandroid.system;
 
 /**
- * Created by gbzarelli on 3/27/18.
+ * Created by Guilherme Biff Zarelli on 3/27/18.
  */
 
 import android.content.ContentResolver;

@@ -1,5 +1,6 @@
-package br.com.helpdev.supportlib.io.network.wifi;
+package br.com.grupocriar.swapandroid.io.network.wifi;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +8,8 @@ import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.RequiresPermission;
+import android.support.annotation.StringDef;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -20,6 +23,11 @@ import java.util.regex.Pattern;
  * Created by Guilherme Biff Zarelli on 26/07/15.
  */
 public class Wifi {
+
+    @StringDef({SECURITY_WEP, SECURITY_WPA, SECURITY_OPEN})
+    @interface WifiSecurity {
+    }
+
     public static final String SECURITY_WEP = "WEP";
     public static final String SECURITY_WPA = "WPA";
     public static final String SECURITY_OPEN = "OPEN";
@@ -35,7 +43,7 @@ public class Wifi {
         return (WifiManager) activity.getSystemService(Activity.WIFI_SERVICE);
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE})
     public static boolean isWifiEnabled(WifiManager wifiManager) {
         if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLED ||
                 wifiManager.getWifiState() == WifiManager.WIFI_STATE_DISABLING) {
@@ -44,10 +52,10 @@ public class Wifi {
         return true;
     }
 
-
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE})
     public static void connectSSIDAsync(final Context activity, final String networkSSID, final String networkPass, final String security) {
         new Thread() {
+            @SuppressLint("MissingPermission")
             @Override
             public void run() {
                 try {
@@ -59,7 +67,7 @@ public class Wifi {
         }.start();
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE})
     public static boolean isConnectedWith(Context context, String ssid) {
         WifiManager wifiManager = getWifiManager(context);
         if (wifiManager == null || !isWifiEnabled(wifiManager)) {
@@ -75,12 +83,12 @@ public class Wifi {
         return false;
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE})
     public static String getSSID(Context context) {
         return getSSID(getWifiManager(context));
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE})
     public static String getSSID(WifiManager wifiManager) {
         try {
             if (wifiManager == null || !isWifiEnabled(wifiManager)) {
@@ -99,8 +107,8 @@ public class Wifi {
         return ssid.replaceAll(Pattern.quote("\""), "");
     }
 
-    @SuppressLint("MissingPermission")
-    public static int connectSSID(Context activity, String networkSSID, String networkPass, String security) throws Exception {
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE})
+    public static int connectSSID(Context activity, String networkSSID, String networkPass, @WifiSecurity String security) throws Exception {
         final WifiManager wm = getWifiManager(activity);
         if (wm == null) {
             return -1;
@@ -209,7 +217,7 @@ public class Wifi {
         return wifiConfiguration.networkId;
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE})
     public static void connectNetworkConfiguration(WifiManager wm, int networkId) throws Exception {
         wm.disconnect();
         try {
@@ -219,8 +227,7 @@ public class Wifi {
         wm.enableNetwork(networkId, true);
     }
 
-
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(anyOf = {Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE})
     public static void enableWifi(Activity activity) {
         WifiManager wifiManager = Wifi.getWifiManager(activity);
         if (!Wifi.isWifiEnabled(wifiManager)) {

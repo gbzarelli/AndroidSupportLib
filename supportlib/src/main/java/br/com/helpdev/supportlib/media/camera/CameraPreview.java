@@ -1,9 +1,10 @@
-package br.com.helpdev.supportlib.media.camera;
+package br.com.grupocriar.swapandroid.media.camera;
 
 import android.app.Activity;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.support.annotation.IntDef;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -12,15 +13,22 @@ import android.view.SurfaceView;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by felipe on 18/08/16.
+ * Created by Felipe Barata on 18/08/16.
  */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 
+    public static final int CAMERA_FACING_BACK = 0;
+    public static final int CAMERA_FACING_FRONT = 1;
+
+    @IntDef({CAMERA_FACING_BACK, CAMERA_FACING_FRONT})
+    @interface CameraInfo {
+    }
+
     public static final int DELAY_PREVIEW_PROCESS_DEFAULT = 1000;
-    private static final String TAG = "CameraPreview";
 
     private SurfaceHolder surfaceHolder;
     protected Camera camera;
+    @CameraInfo
     private int cameraToUse;
     protected Activity activity;
     private int orientation;
@@ -31,15 +39,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private volatile byte[] imageYuv;
     private final int delayPreviewProcess;
 
-    public CameraPreview(Activity activity, int cameraToUse) {
+    public CameraPreview(Activity activity, @CameraInfo int cameraToUse) {
         this(activity, cameraToUse, DELAY_PREVIEW_PROCESS_DEFAULT);
     }
 
-    /**
-     * @param activity
-     * @param cameraToUse Camera.CameraInfo.CAMERA_FACING_
-     */
-    public CameraPreview(Activity activity, int cameraToUse, int delayPreviewProcess) {
+    public CameraPreview(Activity activity, @CameraInfo int cameraToUse, int delayPreviewProcess) {
         super(activity);
         this.delayPreviewProcess = delayPreviewProcess;
         this.cameraToUse = cameraToUse;
@@ -110,19 +114,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         ByteArrayOutputStream bufferImagePreviewJpg = new ByteArrayOutputStream();
         image.compressToJpeg(new Rect(0, 0, image.getWidth(), image.getHeight()), 70, bufferImagePreviewJpg);
-        if (getOrientation() == Surface.ROTATION_270) {
-
-        }
         return bufferImagePreviewJpg.toByteArray();
     }
 
     public void postProcessImage(byte[] image) {
 
     }
-
-//    public byte[] getImageYuv() {
-//        return Arrays.copyOf(imageYuv, imageYuv.length);
-//    }
 
     @Override
     public void surfaceChanged(final SurfaceHolder surfaceHolder, int i, int i1, int i2) {
@@ -181,10 +178,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void setCameraDisplayOrientation() {
-        Camera.CameraInfo info =
-                new Camera.CameraInfo();
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
 
-        Camera.getCameraInfo(cameraToUse, info);
+        android.hardware.Camera.getCameraInfo(cameraToUse, info);
         int rotation = activity.getWindowManager().getDefaultDisplay()
                 .getRotation();
         int degrees = 0;

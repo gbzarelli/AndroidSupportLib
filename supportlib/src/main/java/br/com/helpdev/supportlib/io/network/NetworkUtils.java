@@ -1,13 +1,14 @@
-package br.com.helpdev.supportlib.io.network;
+package br.com.grupocriar.swapandroid.io.network;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.RequiresPermission;
+import android.support.annotation.StringDef;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import br.com.helpdev.supportlib.system.RuntimeAndroid;
+import br.com.grupocriar.swapandroid.system.RuntimeAndroid;
 
 /**
  * Created by Guilherme Biff Zarelli on 17/03/16.
@@ -35,11 +36,13 @@ public final class NetworkUtils {
         return false;
     }
 
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public static boolean hasMobileNetworkAvailable(Context context) {
         NetworkInfo nwinf = getNetWorkInfo(context, ConnectivityManager.TYPE_MOBILE);
         return nwinf != null && nwinf.isAvailable();
     }
 
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public static boolean hasMobileNetworkConnected(Context context) {
         NetworkInfo nwinf = getNetWorkInfo(context, ConnectivityManager.TYPE_MOBILE);
         return nwinf != null && nwinf.isConnectedOrConnecting();
@@ -49,7 +52,7 @@ public final class NetworkUtils {
      * @param type ConnectivityManager.TYPE_MOBILE
      * @return
      */
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public static NetworkInfo getNetWorkInfo(Context context, int type) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return (null == connectivityManager) ? null : connectivityManager.getNetworkInfo(type);
@@ -60,6 +63,9 @@ public final class NetworkUtils {
         return getMobileNetworkType(networkType);
     }
 
+    @StringDef({MOBILE_NETWORK_2G, MOBILE_NETWORK_3G, MOBILE_NETWORK_4G, MOBILE_NETWORK_UNKNOWN})
+    @interface MobileNetworkType {
+    }
 
     public static final String MOBILE_NETWORK_2G = "2G";
     public static final String MOBILE_NETWORK_3G = "3G";
@@ -70,7 +76,8 @@ public final class NetworkUtils {
      * @param networkType
      * @return MOBILE_NETWORK_2G or MOBILE_NETWORK_3G or MOBILE_NETWORK_4G
      */
-    public static String getMobileNetworkType(int networkType) {
+    public static @MobileNetworkType
+    String getMobileNetworkType(int networkType) {
         switch (networkType) {
             case TelephonyManager.NETWORK_TYPE_GPRS:
             case TelephonyManager.NETWORK_TYPE_EDGE:
@@ -95,7 +102,7 @@ public final class NetworkUtils {
         }
     }
 
-    @SuppressLint("MissingPermission")
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public static boolean isOnline(Context context) {
         try {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

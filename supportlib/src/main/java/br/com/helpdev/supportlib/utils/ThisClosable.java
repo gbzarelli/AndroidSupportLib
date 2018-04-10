@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.utils;
+package br.com.grupocriar.swapandroid.utils;
 
 import android.os.Build;
 import android.util.Log;
@@ -6,8 +6,10 @@ import android.util.Log;
 import java.io.Closeable;
 
 /**
+ * @deprecated Depreciado para api >=19
  * Created by Guilherme Biff Zarelli on 16/02/16.
  */
+@Deprecated
 public final class ThisClosable {
     private ThisClosable() {
         throw new RuntimeException("No ThisClosable!");
@@ -19,7 +21,7 @@ public final class ThisClosable {
     public static void close(Object closeable) {
         if (closeable != null) {
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     ((Closeable) closeable).close();
                 } else {
                     closeable.getClass().getMethod("close").invoke(closeable);

@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.gps;
+package br.com.grupocriar.swapandroid.gps;
 
 import android.os.Bundle;
 

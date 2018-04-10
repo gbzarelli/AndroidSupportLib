@@ -1,4 +1,4 @@
-package br.com.helpdev.supportlib.ui;
+package br.com.grupocriar.swapandroid.ui;
 
 import android.content.res.Resources;
 import android.util.TypedValue;
